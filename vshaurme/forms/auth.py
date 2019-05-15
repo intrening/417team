@@ -22,7 +22,7 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Пароль', validators=[
         DataRequired(), Length(8, 128), EqualTo('password2')])
     password2 = PasswordField('Подтвердите пароль', validators=[DataRequired()])
-    submit = SubmitField()
+    submit = SubmitField('Присоедениться')
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():
@@ -35,7 +35,7 @@ class RegisterForm(FlaskForm):
 
 class ForgetPasswordForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
-    submit = SubmitField()
+    submit = SubmitField('Подтвердить')
 
 
 class ResetPasswordForm(FlaskForm):
@@ -43,4 +43,4 @@ class ResetPasswordForm(FlaskForm):
     password = PasswordField('Пароль', validators=[
         DataRequired(), Length(8, 128), EqualTo('password2')])
     password2 = PasswordField('Подтвердите пароль', validators=[DataRequired()])
-    submit = SubmitField()
+    submit = SubmitField('Подтвердить')

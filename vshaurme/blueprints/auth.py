@@ -68,7 +68,7 @@ def register():
         db.session.commit()
         token = generate_token(user=user, operation='confirm')
         send_confirm_email(user=user, token=token)
-        flash('Confirm email sent, check your inbox.', 'info')
+        flash('Письмо с подтверждением отправлено на вашу почту.', 'info')
         return redirect(url_for('.login'))
     return render_template('auth/register.html', form=form)
 
@@ -110,7 +110,7 @@ def forget_password():
         if user:
             token = generate_token(user=user, operation=Operations.RESET_PASSWORD)
             send_reset_password_email(user=user, token=token)
-            flash('Password reset email sent, check your inbox.', 'info')
+            flash('Письмо со сбросом пароля отправлено на вашу почту.', 'info')
             return redirect(url_for('.login'))
         flash('Invalid email.', 'warning')
         return redirect(url_for('.forget_password'))

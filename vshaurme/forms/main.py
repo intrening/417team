@@ -5,14 +5,14 @@ from wtforms.validators import DataRequired, Optional, Length
 
 class DescriptionForm(FlaskForm):
     description = TextAreaField('Описание', validators=[Optional(), Length(0, 500)])
-    submit = SubmitField()
+    submit = SubmitField('Подтвердить')
 
 
 class TagForm(FlaskForm):
     tag = StringField('Добавить тэги (используйте пробел для разделения)', validators=[Optional(), Length(0, 64)])
-    submit = SubmitField()
+    submit = SubmitField('Подтвердить')
 
 
 class CommentForm(FlaskForm):
     body = TextAreaField('', validators=[DataRequired()])
-    submit = SubmitField()
+    submit = SubmitField('Опубликовать')

@@ -49,14 +49,14 @@
                                 {% if current_user != comment.author %}
                                     <a class="dropdown-item btn"
                                        href="{{ url_for('.reply_comment', comment_id=comment.id) }}">
-                                    <span class="oi oi-comment-square"></span> Reply
+                                    <span class="oi oi-comment-square"></span> Ответить
                                 </a>
                                 {% endif %}
                                 {% if current_user == comment.author or current_user == photo.author or current_user.can('MODERATE') %}
                                     <a class="dropdown-item" data-toggle="modal" href="#!"
                                        data-href="{{ url_for('.delete_comment', comment_id=comment.id) }}"
                                        data-target="#confirm-delete">
-                                    <span class="oi oi-trash" aria-hidden="true"></span> Delete
+                                    <span class="oi oi-trash" aria-hidden="true"></span> Удалить
                                   </a>
                                 {% endif %}
                                 {% if current_user != comment.author %}
@@ -64,7 +64,7 @@
                                       action="{{ url_for('.report_comment', comment_id=comment.id) }}">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                     <button type="submit" class="dropdown-item">
-                                        <span class="oi oi-warning" aria-hidden="true"></span> Report
+                                        <span class="oi oi-warning" aria-hidden="true"></span> Пожаловаться
                                       </button>
                                 </form>
                                 {% endif %}

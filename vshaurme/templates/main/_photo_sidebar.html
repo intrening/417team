@@ -46,7 +46,7 @@
                 <form action="{{ url_for('.edit_description', photo_id=photo.id) }}" method="post">
                     {{ description_form.csrf_token }}
                     {{ render_field(description_form.description) }}
-                    <a class="btn btn-light btn-sm" id="cancel-description">Cancel</a>
+                    <a class="btn btn-light btn-sm" id="cancel-description">Отмена</a>
                     {{ render_field(description_form.submit, class='btn btn-success btn-sm') }}
                 </form>
             </div>
@@ -72,7 +72,7 @@
                 <form action="{{ url_for('.new_tag', photo_id=photo.id) }}" method="post">
                     {{ tag_form.csrf_token }}
                     {{ render_field(tag_form.tag) }}
-                    <a class="btn btn-light btn-sm" id="cancel-tag">Cancel</a>
+                    <a class="btn btn-light btn-sm" id="cancel-tag">Отмена</a>
                     {{ render_field(tag_form.submit, class='btn btn-success btn-sm') }}
                 </form>
                 {% if photo.tags %}
@@ -95,7 +95,7 @@
                       action="{{ url_for('main.uncollect', photo_id=photo.id) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button type="submit" class="btn btn-outline-secondary btn-sm">
-                        <span class="oi oi-x"></span> Uncollect
+                        <span class="oi oi-x"></span> Удалить из коллекции
                     </button>
                 </form>
             {% else %}
@@ -103,7 +103,7 @@
                       action="{{ url_for('main.collect', photo_id=photo.id) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button type="submit" class="btn btn-outline-primary btn-sm">
-                        <span class="oi oi-star"></span> Collect
+                        <span class="oi oi-star"></span> Добавить в коллекцию
                     </button>
                 </form>
             {% endif %}
@@ -111,13 +111,13 @@
             <form class="inline" method="post" action="{{ url_for('main.collect', photo_id=photo.id) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn btn-primary btn-sm">
-                    <span class="oi oi-star"></span> Collect
+                    <span class="oi oi-star"></span> Добавить в коллекцию
                 </button>
             </form>
         {% endif %}
         {% if photo.collectors %}
             <a href="{{ url_for('main.show_collectors', photo_id=photo.id) }}">{{ photo.collectors|length }}
-                collectors</a>
+                коллекционера</a>
         {% endif %}
     </div>
 </div>

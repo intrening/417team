@@ -180,7 +180,7 @@ def collect(photo_id):
         return redirect(url_for('.show_photo', photo_id=photo_id))
 
     current_user.collect(photo)
-    flash('Photo collected.', 'success')
+    flash('Фото добавлено в коллекцию.', 'success')
     if current_user != photo.author and photo.author.receive_collect_notification:
         push_collect_notification(collector=current_user, photo_id=photo_id, receiver=photo.author)
     return redirect(url_for('.show_photo', photo_id=photo_id))
@@ -195,7 +195,7 @@ def uncollect(photo_id):
         return redirect(url_for('.show_photo', photo_id=photo_id))
 
     current_user.uncollect(photo)
-    flash('Photo uncollected.', 'info')
+    flash('Фото удалено из коллекции.', 'info')
     return redirect(url_for('.show_photo', photo_id=photo_id))
 
 
