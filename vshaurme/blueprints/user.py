@@ -51,7 +51,7 @@ def follow(username):
         return redirect(url_for('.index', username=username))
 
     current_user.follow(user)
-    flash('User followed.', 'success')
+    flash('Вы подписались на пользователя.', 'success')
     if user.receive_follow_notification:
         push_follow_notification(follower=current_user, receiver=user)
     return redirect_back()
@@ -66,7 +66,7 @@ def unfollow(username):
         return redirect(url_for('.index', username=username))
 
     current_user.unfollow(user)
-    flash('User unfollowed.', 'info')
+    flash('Вы отписались от пользователя.', 'info')
     return redirect_back()
 
 
@@ -101,7 +101,7 @@ def edit_profile():
         current_user.website = form.website.data
         current_user.location = form.location.data
         db.session.commit()
-        flash('Profile updated.', 'success')
+        flash('Профиль обновлен', 'success')
         return redirect(url_for('.index', username=current_user.username))
     form.name.data = current_user.name
     form.username.data = current_user.username

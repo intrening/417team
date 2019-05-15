@@ -1,13 +1,13 @@
 <div class="comments" id="comments">
-    <h3>{{ photo.comments|length }} Comments
+    <h3>{{ photo.comments|length }} Комментариев
         <small>
-            <a href="{{ url_for('.show_photo', photo_id=photo.id, page=pagination.pages or 1) }}#comment-form">latest</a>
+            <a href="{{ url_for('.show_photo', photo_id=photo.id, page=pagination.pages or 1) }}#comment-form">последние</a>
         </small>
         {% if current_user == photo.author %}
             <form class="inline" method="post" action="{{ url_for('.set_comment', photo_id=photo.id) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn btn-xs btn-link float-right">
-                    {% if photo.can_comment %}Disable{% else %}Enable{% endif %} comment
+                    {% if photo.can_comment %}Отключить{% else %}Включить{% endif %} комментарии
                 </button>
             </form>
         {% endif %}
@@ -88,7 +88,7 @@
             {{ render_pagination(pagination) }}
         </div>
     {% else %}
-        <p class="tip">No comments.</p>
+        <p class="tip">Нету комментариев.</p>
     {% endif %}
 
     {% if photo.can_comment %}
@@ -118,9 +118,9 @@
             {% endif %}
         {% else %}
             <p class="tip">
-                <a href="{{ url_for('auth.login') }}">Login</a>
-                or
-                <a href="{{ url_for('auth.register') }}">Register</a> to leave a comment.
+                <a href="{{ url_for('auth.login') }}">Войдите</a>
+                или
+                <a href="{{ url_for('auth.register') }}">Зарегистируйтесь</a> чтобы оставить комментарий.
             </p>
         {% endif %}
     {% else %}

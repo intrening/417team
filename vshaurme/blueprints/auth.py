@@ -21,12 +21,12 @@ def login():
         user = User.query.filter_by(email=form.email.data.lower()).first()
         if user is not None and user.validate_password(form.password.data):
             if login_user(user, form.remember_me.data):
-                flash('Login success.', 'info')
+                flash('Вход выполнен успешно.', 'info')
                 return redirect_back()
             else:
-                flash('Your account is blocked.', 'warning')
+                flash('Ваш аккаунт заблокирован.', 'warning')
                 return redirect(url_for('main.index'))
-        flash('Invalid email or password.', 'warning')
+        flash('Неверный email или пароль.', 'warning')
     return render_template('auth/login.html', form=form)
 
 
@@ -47,7 +47,7 @@ def re_authenticate():
 @login_required
 def logout():
     logout_user()
-    flash('Logout success.', 'info')
+    flash('Выход выполнен успешно.', 'info')
     return redirect(url_for('main.index'))
 
 

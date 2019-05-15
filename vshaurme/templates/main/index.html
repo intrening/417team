@@ -2,7 +2,7 @@
 {% from 'bootstrap/pagination.html' import render_pagination %}
 {% from 'macros.html' import photo_card with context %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Главная страница{% endblock %}
 
 {% block content %}
 {% if current_user.is_authenticated %}
@@ -92,9 +92,9 @@
                 <img src="{{ url_for('static', filename='images/index.jpg') }}" class="rounded img-fluid">
             </div>
             <div class="col-md-4 align-self-center">
-                <h1>VShaurme</h1>
-                <p>Capture and remember every wonderful moment.</p>
-                <p><a class="btn btn-primary btn-lg" href="{{ url_for('auth.register') }}">Join Now</a></p>
+                <h1>ВШаурме</h1>
+                <p>Фотографируй в момент наслаждения.</p>
+                <p><a class="btn btn-primary btn-lg" href="{{ url_for('auth.register') }}">Присоедениться</a></p>
             </div>
         </div>
     </div>

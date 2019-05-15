@@ -83,7 +83,7 @@ def read_notification(notification_id):
 
     notification.is_read = True
     db.session.commit()
-    flash('Notification archived.', 'success')
+    flash('Уведомления прочитаны.', 'success')
     return redirect(url_for('.show_notifications'))
 
 
@@ -93,7 +93,7 @@ def read_all_notification():
     for notification in current_user.notifications:
         notification.is_read = True
     db.session.commit()
-    flash('All notifications archived.', 'success')
+    flash('Все уведомления прочитаны.', 'success')
     return redirect(url_for('.show_notifications'))
 
 
@@ -164,7 +164,7 @@ def photo_previous(photo_id):
     photo_p = Photo.query.with_parent(photo.author).filter(Photo.id > photo_id).order_by(Photo.id.asc()).first()
 
     if photo_p is None:
-        flash('This is already the first one.', 'info')
+        flash('Это итак первая фотография.', 'info')
         return redirect(url_for('.show_photo', photo_id=photo_id))
     return redirect(url_for('.show_photo', photo_id=photo_p.id))
 
