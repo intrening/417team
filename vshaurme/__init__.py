@@ -57,7 +57,7 @@ def register_shell_context(app):
     @app.shell_context_processor
     def make_shell_context():
         return dict(db=db, User=User, Photo=Photo, Tag=Tag,
-                    Follow=Follow, Collect=123, Comment=Comment,
+                    Follow=Follow, Collect=Collect, Comment=Comment,
                     Notification=Notification)
 
 
