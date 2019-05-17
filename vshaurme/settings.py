@@ -60,24 +60,27 @@ class BaseConfig:
     DROPZONE_ENABLE_CSRF = True
 
     WHOOSHEE_MIN_STRING_LEN = 1
+    ROLLBAR_ACCESS_TOKEN = '7f1dc8b6211345d3bc8c8f3959eb4775'
 
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = \
         prefix + os.path.join(basedir, 'data-dev.db')
     REDIS_URL = "redis://localhost"
+    ROLLBAR_ENV_NAME = 'development'
 
 
 class TestingConfig(BaseConfig):
     TESTING = True
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///'  # in-memory database
+    ROLLBAR_ENV_NAME = 'test'
 
 
 class ProductionConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL',
                                         prefix + os.path.join(basedir, 'data.db'))
-
+    ROLLBAR_ENV_NAME = 'production'
 
 config = {
     'development': DevelopmentConfig,

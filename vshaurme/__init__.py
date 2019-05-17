@@ -13,6 +13,9 @@ from vshaurme.blueprints.user import user_bp
 from vshaurme.extensions import bootstrap, db, login_manager, mail, dropzone, moment, whooshee, avatars, csrf
 from vshaurme.models import Role, User, Photo, Tag, Follow, Notification, Comment, Collect, Permission
 from vshaurme.settings import config
+import rollbar
+import rollbar.contrib.flask
+from flask import got_request_exception
 
 
 def create_app(config_name=None):
@@ -29,7 +32,7 @@ def create_app(config_name=None):
     register_errorhandlers(app)
     register_shell_context(app)
     register_template_context(app)
-
+    register_rollbar(app)
     return app
 
 
@@ -152,3 +155,14 @@ def register_commands(app):
         click.echo('Generating %d comments...' % comment)
         fake_comment(comment)
         click.echo('Done.')
+
+
+def register_rollbar(app):
+    rollbar.init(
+        access_token=app.config['ROLLBAR_ACCESS_TOKEN'],
+        environment=app.config['ROLLBAR_ENV_NAME'],
+        root=os.path.dirname(os.path.realpath(__file__)),
+        allow_logging_basic_config=False,
+    )
+
+    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)

@@ -16,6 +16,7 @@ user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/<username>')
 def index(username):
+    raise Exception('Text exception')
     user = User.query.filter_by(username=username).first_or_404()
     if user == current_user and user.locked:
         flash('Your account is locked.', 'danger')
