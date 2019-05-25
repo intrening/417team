@@ -12,6 +12,7 @@ admin_bp = Blueprint('admin', __name__)
 
 @admin_bp.route('/')
 @login_required
+@permission_required('MODERATE')
 def index():
     user_count = User.query.count()
     locked_user_count = User.query.filter_by(locked=True).count()
