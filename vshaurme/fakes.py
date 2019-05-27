@@ -28,13 +28,13 @@ def fake_admin():
 
 def fake_user(count=10):
     for user_number in range(count):
-        user = User(name='Grey Li',
+        user = User(name=fake.first_name(),
                     confirmed=True,
-                    username='greyli{0}'.format(user_number),
-                    bio='My name is Grey Li.',
-                    location='Longon',
-                    website='http://greyli.com',
-                    email='admin{0}@helloflask.com'.format(user_number))
+                    username=fake.user_name(),
+                    bio=fake.sentence(),
+                    location=fake.city(),
+                    website=fake.uri(),
+                    email=fake.ascii_free_email())
         user.set_password('123456')
         db.session.add(user)
         try:
@@ -52,7 +52,7 @@ def fake_follow(count=30):
 
 def fake_tag(count=20):
     for tag_number in range(count):
-        tag = Tag(name='my_tag{0}'.format(tag_number))
+        tag = Tag(name=fake.word())
         db.session.add(tag)
         try:
             db.session.commit()
