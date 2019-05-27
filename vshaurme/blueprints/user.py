@@ -16,7 +16,6 @@ user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/<username>')
 def index(username):
-    raise Exception('Text exception')
     user = User.query.filter_by(username=username).first_or_404()
     if user == current_user and user.locked:
         flash('Your account is locked.', 'danger')
@@ -146,7 +145,10 @@ def crop_avatar():
         y = form.y.data
         w = form.w.data
         h = form.h.data
-        # TODO: crop avatar
+        filenames = avatars.crop_avatar(current_user.avatar_raw, x, y, w, h)
+        current_user.avatar_s = filenames[0]
+        current_user.avatar_m = filenames[1]
+        current_user.avatar_l = filenames[2]
         db.session.commit()
         flash('Avatar updated.', 'success')
     flash_errors(form)
