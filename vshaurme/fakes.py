@@ -65,7 +65,8 @@ def fake_photo(count=30):
     upload_path = current_app.config['VSHAURME_UPLOAD_PATH']
     for photo_number in range(count):
         filename = 'random_%d.jpg' % photo_number
-        # TODO: generate image
+        image = Image.new("RGB", (random.randint(1,2000), random.randint(1,2000)))
+        image.save('uploads/{0}'.format(filename))
 
         photo = Photo(
             description=fake.text(),
