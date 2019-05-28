@@ -25,7 +25,7 @@
                    target="_blank">{{ user.location|truncate(30) }}</a>&nbsp;&nbsp;
             {% endif %}
             <span class="oi oi-calendar"></span>
-            Присоеденился {{ moment(user.member_since).format('LL') }}
+            Присоединился {{ moment(user.member_since).format('LL') }}
         </p>
         <div>
             {% if current_user != user %}
