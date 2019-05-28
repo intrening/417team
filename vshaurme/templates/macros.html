@@ -31,16 +31,16 @@
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button type="submit" class="btn btn-dark btn-sm">Отписаться</button>
                     {% if current_user.is_followed_by(user) %}
-                        <p class="badge badge-light">Follow each other</p>
+                        <p class="badge badge-light">Вы подписаны друг на друга</p>
                     {% endif %}
                 </form>
             {% else %}
                 <form class="inline" method="post"
                       action="{{ url_for('user.follow', username=user.username, next=request.full_path) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <button type="submit" class="btn btn-primary btn-sm">Follow</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Подписаться</button>
                     {% if current_user.is_followed_by(user) %}
-                        <p class="badge badge-light">Follows you</p>
+                        <p class="badge badge-light">Подписан на вас</p>
                     {% endif %}
                 </form>
             {% endif %}
