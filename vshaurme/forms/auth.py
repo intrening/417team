@@ -20,9 +20,20 @@ class RegisterForm(FlaskForm):
                                                    Regexp('^[a-zA-Z0-9]*$',
                                                           message='Имя пользователя должно состоять из a-z, A-Z или 0-9.')])
     password = PasswordField('Пароль', validators=[
-        DataRequired(), Length(8, 128), EqualTo('password2')])
+        DataRequired(), Length(10, 128, message='Длинна пароля должна быть не меньше 10 символов'), 
+             EqualTo('password2')])
     password2 = PasswordField('Подтвердите пароль', validators=[DataRequired()])
     submit = SubmitField('Присоединиться')
+
+    def validate_password(self, field):
+        if field.data.isdigit():
+            raise ValidationError('Пароль не должен состоять только из цифр')
+        elif field.data.isalpha():
+            raise ValidationError('Пароль не должен состоять только из букв')
+        elif field.data.islower():
+            raise ValidationError('Пароль не должен состоять только из букв нижнего регистра')
+        elif field.data.isupper():
+            raise ValidationError('Пароль не должен состоять только из букв верхнего регистра')
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():
