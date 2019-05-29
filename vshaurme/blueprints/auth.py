@@ -80,10 +80,10 @@ def confirm(token):
         return redirect(url_for('main.index'))
 
     if validate_token(user=current_user, token=token, operation=Operations.CONFIRM):
-        flash('Account confirmed.', 'success')
+        flash('Аккаунт подтвержден.', 'success')
         return redirect(url_for('main.index'))
     else:
-        flash('Invalid or expired token.', 'danger')
+        flash('Неверный или просроченный токен.', 'danger')
         return redirect(url_for('.resend_confirm_email'))
 
 
@@ -95,7 +95,7 @@ def resend_confirm_email():
 
     token = generate_token(user=current_user, operation=Operations.CONFIRM)
     send_confirm_email(user=current_user, token=token)
-    flash('New email sent, check your inbox.', 'info')
+    flash('Новое письмо отправлено, проверьте Входящие', 'info')
     return redirect(url_for('main.index'))
 
 
@@ -112,7 +112,7 @@ def forget_password():
             send_reset_password_email(user=user, token=token)
             flash('Письмо со сбросом пароля отправлено на вашу почту.', 'info')
             return redirect(url_for('.login'))
-        flash('Invalid email.', 'warning')
+        flash('Неверный email.', 'warning')
         return redirect(url_for('.forget_password'))
     return render_template('auth/reset_password.html', form=form)
 
@@ -129,9 +129,9 @@ def reset_password(token):
             return redirect(url_for('main.index'))
         if validate_token(user=user, token=token, operation=Operations.RESET_PASSWORD,
                           new_password=form.password.data):
-            flash('Password updated.', 'success')
+            flash('Пароль обновлен.', 'success')
             return redirect(url_for('.login'))
         else:
-            flash('Invalid or expired link.', 'danger')
+            flash('Неверная или просроченная ссылка.', 'danger')
             return redirect(url_for('.forget_password'))
     return render_template('auth/reset_password.html', form=form)

@@ -48,7 +48,7 @@ def edit_profile_admin(user_id):
         user.username = form.username.data
         user.email = form.email.data
         db.session.commit()
-        flash('Profile updated.', 'success')
+        flash('Профиль обновлен', 'success')
         return redirect_back()
     form.name.data = user.name
     form.role.data = user.role_id
@@ -67,10 +67,10 @@ def edit_profile_admin(user_id):
 def block_user(user_id):
     user = User.query.get_or_404(user_id)
     if user.role.name in ['Administrator', 'Moderator']:
-        flash('Permission denied.', 'warning')
+        flash('Доступ запрещен.', 'warning')
     else:
         user.block()
-        flash('Account blocked.', 'info')
+        flash('Аккаунт заблокирован.', 'info')
     return redirect_back()
 
 
@@ -79,7 +79,7 @@ def block_user(user_id):
 def unblock_user(user_id):
     user = User.query.get_or_404(user_id)
     user.unblock()
-    flash('Block canceled.', 'info')
+    flash('Аккаунт разблокирован.', 'info')
     return redirect_back()
 
 
@@ -88,10 +88,10 @@ def unblock_user(user_id):
 def lock_user(user_id):
     user = User.query.get_or_404(user_id)
     if user.role.name in ['Administrator', 'Moderator']:
-        flash('Permission denied.', 'warning')
+        flash('Доступ запрещен.', 'warning')
     else:
         user.lock()
-        flash('Account locked.', 'info')
+        flash('Аккаунт закрыт.', 'info')
     return redirect_back()
 
 
@@ -100,7 +100,7 @@ def lock_user(user_id):
 def unlock_user(user_id):
     user = User.query.get_or_404(user_id)
     user.unlock()
-    flash('Lock canceled.', 'info')
+    flash('Аккаут открыт.', 'info')
     return redirect_back()
 
 
@@ -110,7 +110,7 @@ def delete_tag(tag_id):
     tag = Tag.query.get_or_404(tag_id)
     db.session.delete(tag)
     db.session.commit()
-    flash('Tag deleted.', 'info')
+    flash('Тэг удален.', 'info')
     return redirect_back()
 
 
