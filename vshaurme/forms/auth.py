@@ -7,9 +7,6 @@ from vshaurme.validators import check_passwords_rules, check_swear_usernames
 from vshaurme.models import User
 
 
-swear_words = ['fuck', 'shit', 'cunt', 'asshole', 'bitch', 'bint', 'xuy', 'pizda', 'ebat']
-
-
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
     password = PasswordField('Пароль', validators=[DataRequired()])
@@ -51,16 +48,6 @@ class ResetPasswordForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
     password = PasswordField('Пароль', validators=[
         DataRequired(), Length(10, 128, message='Длинна пароля должна быть не меньше 10 символов'), 
-             EqualTo('password2')])
+             EqualTo('password2'), check_passwords_rules])
     password2 = PasswordField('Подтвердите пароль', validators=[DataRequired()])
     submit = SubmitField('Подтвердить')
-
-    def validate_password(self, field):
-        if field.data.isdigit():
-            raise ValidationError('Пароль не должен состоять только из цифр')
-        elif field.data.isalpha():
-            raise ValidationError('Пароль не должен состоять только из букв')
-        elif field.data.islower():
-            raise ValidationError('Пароль не должен состоять только из букв нижнего регистра')
-        elif field.data.isupper():
-            raise ValidationError('Пароль не должен состоять только из букв верхнего регистра')
