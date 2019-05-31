@@ -9,7 +9,7 @@ class DescriptionForm(FlaskForm):
 
 
 class TagForm(FlaskForm):
-    tag = StringField('Добавить тэги (используйте пробел для разделения)', validators=[Optional(), Length(0, 64)])
+    tag = StringField('Добавить теги (используйте пробел для разделения)', validators=[Optional(), Length(0, 64)])
     submit = SubmitField('Подтвердить')
 
 

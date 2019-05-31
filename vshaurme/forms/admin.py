@@ -21,7 +21,7 @@ class EditProfileAdminForm(EditProfileForm):
 
     def validate_username(self, field):
         if field.data != self.user.username and User.query.filter_by(username=field.data).first():
-            raise ValidationError('Имя пользователя уже изпользуется.')
+            raise ValidationError('Имя пользователя уже используется.')
 
     def validate_email(self, field):
         if field.data != self.user.email and User.query.filter_by(email=field.data.lower()).first():

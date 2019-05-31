@@ -130,7 +130,7 @@ def upload_avatar():
         filename = avatars.save_avatar(image)
         current_user.avatar_raw = filename
         db.session.commit()
-        flash('Изобрадение загружено, пожалуйста обрежьте.', 'success')
+        flash('Изображение загружено, пожалуйста обрежьте.', 'success')
     flash_errors(form)
     return redirect(url_for('.change_avatar'))
 

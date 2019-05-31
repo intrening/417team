@@ -153,7 +153,7 @@ def photo_next(photo_id):
     photo_n = Photo.query.with_parent(photo.author).filter(Photo.id < photo_id).order_by(Photo.id.desc()).first()
 
     if photo_n is None:
-        flash('Это итак последняя фотография.', 'info')
+        flash('Это и так последняя фотография.', 'info')
         return redirect(url_for('.show_photo', photo_id=photo_id))
     return redirect(url_for('.show_photo', photo_id=photo_n.id))
 
@@ -164,7 +164,7 @@ def photo_previous(photo_id):
     photo_p = Photo.query.with_parent(photo.author).filter(Photo.id > photo_id).order_by(Photo.id.asc()).first()
 
     if photo_p is None:
-        flash('Это итак первая фотография.', 'info')
+        flash('Это и так первая фотография.', 'info')
         return redirect(url_for('.show_photo', photo_id=photo_id))
     return redirect(url_for('.show_photo', photo_id=photo_p.id))
 
@@ -295,7 +295,7 @@ def new_tag(photo_id):
             if tag not in photo.tags:
                 photo.tags.append(tag)
                 db.session.commit()
-        flash('Тэг добавлен.', 'success')
+        flash('Тег добавлен.', 'success')
 
     flash_errors(form)
     return redirect(url_for('.show_photo', photo_id=photo_id))
@@ -391,5 +391,5 @@ def delete_tag(photo_id, tag_id):
         db.session.delete(tag)
         db.session.commit()
 
-    flash('Тэг удален.', 'info')
+    flash('Тег удален.', 'info')
     return redirect(url_for('.show_photo', photo_id=photo_id))

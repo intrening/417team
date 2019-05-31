@@ -51,7 +51,7 @@ class ChangeEmailForm(FlaskForm):
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField('Старый пароль', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[
-        DataRequired(), Length(10, 128, message='Длинна пароля должна быть не меньше 10 символов'), 
+        DataRequired(), Length(10, 128, message='Длина пароля должна быть не меньше 10 символов'), 
              EqualTo('password2'), check_passwords_rules])
     password2 = PasswordField('Подтвердите пароль', validators=[DataRequired()])
     submit = SubmitField('Сохранить')
