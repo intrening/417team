@@ -21,7 +21,7 @@ class RegisterForm(FlaskForm):
                                                    Length(1, 20), Regexp('^[a-zA-Z0-9]*$',
                                                           message='Имя пользователя должно состоять из a-z, A-Z или 0-9.')])
     password = PasswordField('Пароль', validators=[
-        DataRequired(), Length(10, 128, message='Длинна пароля должна быть не меньше 10 символов'), 
+        DataRequired(), Length(10, 128, message='Длина пароля должна быть не меньше 10 символов'), 
              EqualTo('password2'), check_passwords_rules])
     password2 = PasswordField('Подтвердите пароль', validators=[DataRequired()])
     submit = SubmitField('Присоединиться')
@@ -47,7 +47,7 @@ class ForgetPasswordForm(FlaskForm):
 class ResetPasswordForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
     password = PasswordField('Пароль', validators=[
-        DataRequired(), Length(10, 128, message='Длинна пароля должна быть не меньше 10 символов'), 
+        DataRequired(), Length(10, 128, message='Длина пароля должна быть не меньше 10 символов'), 
              EqualTo('password2'), check_passwords_rules])
     password2 = PasswordField('Подтвердите пароль', validators=[DataRequired()])
     submit = SubmitField('Подтвердить')

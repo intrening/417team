@@ -24,7 +24,7 @@
                         <div class="dropdown-menu dropdown-menu-right" role="menu">
                             <a class="dropdown-item" href="{{ url_for('admin.manage_photo') }}">Фото</a>
                             <a class="dropdown-item" href="{{ url_for('admin.manage_user') }}">Пользователи</a>
-                            <a class="dropdown-item" href="{{ url_for('admin.manage_tag') }}">Тэги</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.manage_tag') }}">Теги</a>
                             <a class="dropdown-item" href="{{ url_for('admin.manage_comment') }}">Комментарии</a>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
         </div>
         <div class="col-md-6">
             <div class="card border-success mb-3">
-                <div class="card-header"><span class="oi oi-tag"></span> Тэги</div>
+                <div class="card-header"><span class="oi oi-tag"></span> Теги</div>
                 <div class="card-body">
                     <h4 class="card-title">Всего: {{ tag_count|default('0') }}</h4>
                     <p class="card-text">&nbsp;</p>

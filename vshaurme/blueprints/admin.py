@@ -110,7 +110,7 @@ def delete_tag(tag_id):
     tag = Tag.query.get_or_404(tag_id)
     db.session.delete(tag)
     db.session.commit()
-    flash('Тэг удален.', 'info')
+    flash('Тег удален.', 'info')
     return redirect_back()
 
 
