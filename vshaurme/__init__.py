@@ -156,6 +156,16 @@ def register_commands(app):
         fake_comment(comment)
         click.echo('Done.')
 
+    @app.cli.command()
+    def emails():
+        """Loading emails."""
+
+        from vshaurme.utils import load_emails
+
+        click.echo('Loading emails')
+        load_emails()
+        click.echo('Done')
+
 
 def register_rollbar(app):
     rollbar.init(

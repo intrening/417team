@@ -1,3 +1,4 @@
+import csv
 import os
 import uuid
 
@@ -97,3 +98,15 @@ def flash_errors(form):
                 getattr(form, field).label.text,
                 error
             ))
+
+
+def load_emails():
+    emails_names = db.session.query(User.email, User.name).all()
+
+    with open('email.csv', 'w') as csvfile:
+        filewriter = csv.writer(csvfile, delimiter=',')
+
+        filewriter.writerow(['Email', 'Name'])
+        for user in emails_names:
+            filewriter.writerow(user)
+       
