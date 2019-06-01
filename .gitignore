@@ -114,3 +114,4 @@ uploads/avatars/*
 
 whooshee
 .vscode
+app/.DS_Store

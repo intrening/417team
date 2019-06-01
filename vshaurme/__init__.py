@@ -14,6 +14,7 @@ from vshaurme.blueprints.user import user_bp
 from vshaurme.extensions import bootstrap, db, login_manager, mail, dropzone, moment, whooshee, avatars, csrf
 from vshaurme.models import Role, User, Photo, Tag, Follow, Notification, Comment, Collect, Permission
 from vshaurme.settings import config
+from flask import request
 
 
 def create_app(config_name=None):
@@ -23,6 +24,10 @@ def create_app(config_name=None):
     app = Flask('vshaurme')
     babel = Babel(app)
     
+    @babel.localeselector   
+    def get_locale():
+        return request.accept_languages.best_match(app.config['LANGUAGES'])
+        
     app.config.from_object(config[config_name])
 
     register_extensions(app)
