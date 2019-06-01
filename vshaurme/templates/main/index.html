@@ -92,9 +92,9 @@
                 <img src="{{ url_for('static', filename='images/index.jpg') }}" class="rounded img-fluid">
             </div>
             <div class="col-md-4 align-self-center">
-                <h1>ВШаурме</h1>
-                <p>Найди лучшую шаурму!!!</p>
-                <p><a class="btn btn-primary btn-lg" href="{{ url_for('auth.register') }}">Присоединиться</a></p>
+                <h1>{{ _('Вшаурме') }}</h1>
+                <p>{{ _('Найди лучшую шаурму!!!') }}</p>
+                <p><a class="btn btn-primary btn-lg" href="{{ url_for('auth.register') }}">{{ _('Присоединиться') }}</a></p>
             </div>
         </div>
     </div>

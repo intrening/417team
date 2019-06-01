@@ -62,6 +62,7 @@ class BaseConfig:
     WHOOSHEE_MIN_STRING_LEN = 1
     ROLLBAR_ACCESS_TOKEN = '7f1dc8b6211345d3bc8c8f3959eb4775'
 
+    LANGUAGES = ['ru','en']
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = \
