@@ -6,9 +6,9 @@
             {% if current_user.is_authenticated %}
                 {% if current_user != user and current_user.is_followed_by(user) %}
                     {% if user.is_followed_by(current_user) %}
-                        <span class="badge badge-light">Подписаны дрйг на друга</span>
+                        <span class="badge badge-light">{{ _('Подписаны друг на друга') }}</span>
                     {% else %}
-                        <span class="badge badge-light">Подписан на вас</span>
+                        <span class="badge badge-light">{{ _('Подписан на вас') }}</span>
                     {% endif %}
                 {% endif %}
             {% endif %}
@@ -16,34 +16,34 @@
     </div>
     <p class="card-text">
         <a href="{{ url_for('user.index', username=user.username) }}">
-            <strong>{{ user.photos|length }}</strong> Фотографии
+            <strong>{{ user.photos|length }}</strong> {{ _('Фотографии') }}
         </a>&nbsp;
         <a href="{{ url_for('user.show_followers', username=user.username) }}">
             <strong id="followers-count-{{ user.id }}"
                     data-href="{{ url_for('ajax.followers_count', user_id=user.id) }}">
                 {{ user.followers.count() - 1 }}
-            </strong> Подписчики
+            </strong> {{ _('Подписчики') }}
         </a>
     </p>
-    <a href="{{ url_for('user.index', username=user.username) }}" class="btn btn-light btn-sm">Главная</a>
+    <a href="{{ url_for('user.index', username=user.username) }}" class="btn btn-light btn-sm">{{ _('Главная') }}</a>
     {% if current_user.is_authenticated %}
         {% if user != current_user %}
             <button data-id="{{ user.id }}"
                     data-href="{{ url_for('ajax.unfollow', username=user.username) }}"
                     class="{% if not current_user.is_following(user) %}hide{% endif %} btn btn-dark btn-sm unfollow-btn">
-                Отписаться
+                {{ _('Отписаться') }}
             </button>
             <button data-id="{{ user.id }}"
                     data-href="{{ url_for('ajax.follow', username=user.username) }}"
                     class="{% if current_user.is_following(user) %}hide{% endif %} btn btn-primary btn-sm follow-btn">
-                Подписаться
+                {{ _('Подписаться') }}
             </button>
         {% endif %}
     {% else %}
         <form class="inline" method="post"
               action="{{ url_for('user.follow', username=user.username) }}">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button type="submit" class="btn btn-primary btn-sm">Подписаться</button>
+            <button type="submit" class="btn btn-primary btn-sm">{{ _('Подписаться') }}</button>
         </form>
     {% endif %}
 </div>

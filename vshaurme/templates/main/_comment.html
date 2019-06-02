@@ -1,13 +1,13 @@
 <div class="comments" id="comments">
-    <h3>{{ photo.comments|length }} Комментариев
+    <h3>{{ photo.comments|length }} {{ _('Комментариев') }}
         <small>
-            <a href="{{ url_for('.show_photo', photo_id=photo.id, page=pagination.pages or 1) }}#comment-form">последние</a>
+            <a href="{{ url_for('.show_photo', photo_id=photo.id, page=pagination.pages or 1) }}#comment-form">{{ _('последние') }}</a>
         </small>
         {% if current_user == photo.author %}
             <form class="inline" method="post" action="{{ url_for('.set_comment', photo_id=photo.id) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn btn-xs btn-link float-right">
-                    {% if photo.can_comment %}Отключить{% else %}Включить{% endif %} комментарии
+                    {% if photo.can_comment %}{{ _('Отключить') }}{% else %}{{ _('Включить') }}{% endif %} {{ _('комментарии') }}
                 </button>
             </form>
         {% endif %}
@@ -49,14 +49,14 @@
                                 {% if current_user != comment.author %}
                                     <a class="dropdown-item btn"
                                        href="{{ url_for('.reply_comment', comment_id=comment.id) }}">
-                                    <span class="oi oi-comment-square"></span> Ответить
+                                    <span class="oi oi-comment-square"></span> {{ _('Ответить') }}
                                 </a>
                                 {% endif %}
                                 {% if current_user == comment.author or current_user == photo.author or current_user.can('MODERATE') %}
                                     <a class="dropdown-item" data-toggle="modal" href="#!"
                                        data-href="{{ url_for('.delete_comment', comment_id=comment.id) }}"
                                        data-target="#confirm-delete">
-                                    <span class="oi oi-trash" aria-hidden="true"></span> Удалить
+                                    <span class="oi oi-trash" aria-hidden="true"></span> {{ _('Удалить') }}
                                   </a>
                                 {% endif %}
                                 {% if current_user != comment.author %}
@@ -64,7 +64,7 @@
                                       action="{{ url_for('.report_comment', comment_id=comment.id) }}">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                     <button type="submit" class="dropdown-item">
-                                        <span class="oi oi-warning" aria-hidden="true"></span> Пожаловаться
+                                        <span class="oi oi-warning" aria-hidden="true"></span> {{ _('Пожаловаться') }}
                                       </button>
                                 </form>
                                 {% endif %}
@@ -88,7 +88,7 @@
             {{ render_pagination(pagination) }}
         </div>
     {% else %}
-        <p class="tip">Нету комментариев.</p>
+        <p class="tip">{{ _('Нету комментариев.') }}</p>
     {% endif %}
 
     {% if photo.can_comment %}
@@ -118,14 +118,14 @@
             {% endif %}
         {% else %}
             <p class="tip">
-                <a href="{{ url_for('auth.login') }}">Войдите</a>
+                <a href="{{ url_for('auth.login') }}">{{ _('Войдите') }}</a>
                 или
-                <a href="{{ url_for('auth.register') }}">Зарегистируйтесь</a> чтобы оставить комментарий.
+                <a href="{{ url_for('auth.register') }}">{{ _('Зарегистируйтесь') }}</a> {{ _('чтобы оставить комментарий.') }}
             </p>
         {% endif %}
     {% else %}
         <p class="tip">
-            Комментарии отключены.
+            {{ _('Комментарии отключены.') }}
         </p>
     {% endif %}
 </div>

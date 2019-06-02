@@ -1,4 +1,5 @@
 from flask import render_template, jsonify, Blueprint
+from flask_babel import lazy_gettext as _l
 from flask_login import current_user
 
 from vshaurme.models import User, Photo, Notification
@@ -10,7 +11,7 @@ ajax_bp = Blueprint('ajax', __name__)
 @ajax_bp.route('/notifications-count')
 def notifications_count():
     if not current_user.is_authenticated:
-        return jsonify(message='Необходимо войти.'), 403
+        return jsonify(message=_l('Необходимо войти.')), 403
 
     count = Notification.query.with_parent(current_user).filter_by(is_read=False).count()
     return jsonify(count=count)
@@ -39,62 +40,62 @@ def collectors_count(photo_id):
 @ajax_bp.route('/collect/<int:photo_id>', methods=['POST'])
 def collect(photo_id):
     if not current_user.is_authenticated:
-        return jsonify(message='Необходимо войти.'), 403
+        return jsonify(message=_l('Необходимо войти.')), 403
     if not current_user.confirmed:
-        return jsonify(message='Необходимо подтверждение аккаунта.'), 400
+        return jsonify(message=_l('Необходимо подтверждение аккаунта.')), 400
     if not current_user.can('COLLECT'):
-        return jsonify(message='Отсутствует разрешение.'), 403
+        return jsonify(message=_l('Отсутствует разрешение.')), 403
 
     photo = Photo.query.get_or_404(photo_id)
     if current_user.is_collecting(photo):
-        return jsonify(message='Уже в коллекции.'), 400
+        return jsonify(message=_l('Уже в коллекции.')), 400
 
     current_user.collect(photo)
     if current_user != photo.author and photo.author.receive_collect_notification:
         push_collect_notification(collector=current_user, photo_id=photo_id, receiver=photo.author)
-    return jsonify(message='Фото в коллекции.')
+    return jsonify(message=_l('Фото в коллекции.'))
 
 
 @ajax_bp.route('/uncollect/<int:photo_id>', methods=['POST'])
 def uncollect(photo_id):
     if not current_user.is_authenticated:
-        return jsonify(message='Необходимо войти'), 403
+        return jsonify(message=_l('Необходимо войти')), 403
 
     photo = Photo.query.get_or_404(photo_id)
     if not current_user.is_collecting(photo):
-        return jsonify(message='Фото еще не в коллекции.'), 400
+        return jsonify(message=_l('Фото еще не в коллекции.')), 400
 
     current_user.uncollect(photo)
-    return jsonify(message='Фото больше не в коллекции.')
+    return jsonify(message=_l('Фото больше не в коллекции.'))
 
 
 @ajax_bp.route('/follow/<username>', methods=['POST'])
 def follow(username):
     if not current_user.is_authenticated:
-        return jsonify(message='Необходимо войти.'), 403
+        return jsonify(message=_l('Необходимо войти.')), 403
     if not current_user.confirmed:
-        return jsonify(message='Необходимо подтверждение аккаунта.'), 400
+        return jsonify(message=_l('Необходимо подтверждение аккаунта.')), 400
     if not current_user.can('FOLLOW'):
-        return jsonify(message='Отсутствует разрешение.'), 403
+        return jsonify(message=_l('Отсутствует разрешение.')), 403
 
     user = User.query.filter_by(username=username).first_or_404()
     if current_user.is_following(user):
-        return jsonify(message='Вы уже подписаны.'), 400
+        return jsonify(message=_l('Вы уже подписаны.')), 400
 
     current_user.follow(user)
     if user.receive_collect_notification:
         push_follow_notification(follower=current_user, receiver=user)
-    return jsonify(message='Вы подписались на пользователя.')
+    return jsonify(message=_l('Вы подписались на пользователя.'))
 
 
 @ajax_bp.route('/unfollow/<username>', methods=['POST'])
 def unfollow(username):
     if not current_user.is_authenticated:
-        return jsonify(message='Необходимо войти.'), 403
+        return jsonify(message=_l('Необходимо войти.')), 403
 
     user = User.query.filter_by(username=username).first_or_404()
     if not current_user.is_following(user):
-        return jsonify(message='Вы еще не подписаны.'), 400
+        return jsonify(message=_l('Вы еще не подписаны.')), 400
 
     current_user.unfollow(user)
-    return jsonify(message='Вы отписались.')
+    return jsonify(message=_l('Вы отписались.'))

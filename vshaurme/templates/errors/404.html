@@ -7,12 +7,12 @@
         <div class="card w-50 bg-light">
             <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/error.jpg') }}">
             <div class="card-body">
-                <h5 class="card-title">404 Ошибка</h5>
-                <p class="card-text">Страница не найдена</p>
+                <h5 class="card-title">{{ _('404 Ошибка') }}</h5>
+                <p class="card-text">{{ _('Страница не найдена') }}</p>
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    <a class="btn btn-primary" href="{{ url_for('main.index') }}">Вернуться на главную</a>
+                    <a class="btn btn-primary" href="{{ url_for('main.index') }}">{{ _('Вернуться на главную') }}</a>
                 </div>
             </div>
         </div>

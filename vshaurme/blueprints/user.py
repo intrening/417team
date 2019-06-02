@@ -1,4 +1,5 @@
 from flask import render_template, flash, redirect, url_for, current_app, request, Blueprint
+from flask_babel import _
 from flask_login import login_required, current_user, fresh_login_required, logout_user
 
 from vshaurme.decorators import confirm_required, permission_required
@@ -18,7 +19,7 @@ user_bp = Blueprint('user', __name__)
 def index(username):
     user = User.query.filter_by(username=username).first_or_404()
     if user == current_user and user.locked:
-        flash('Ваш аккаут закрыт.', 'danger')
+        flash(_('Ваш аккаут закрыт.'), 'danger')
 
     if user == current_user and not user.active:
         logout_user()
@@ -47,11 +48,11 @@ def show_collections(username):
 def follow(username):
     user = User.query.filter_by(username=username).first_or_404()
     if current_user.is_following(user):
-        flash('Вы уже подписаны на пользователя.', 'info')
+        flash(_('Вы уже подписаны на пользователя.'), 'info')
         return redirect(url_for('.index', username=username))
 
     current_user.follow(user)
-    flash('Вы подписались на пользователя.', 'success')
+    flash(_('Вы подписались на пользователя.'), 'success')
     if user.receive_follow_notification:
         push_follow_notification(follower=current_user, receiver=user)
     return redirect_back()
@@ -62,11 +63,11 @@ def follow(username):
 def unfollow(username):
     user = User.query.filter_by(username=username).first_or_404()
     if not current_user.is_following(user):
-        flash('Вы еще не подписаны на пользователя.', 'info')
+        flash(_('Вы еще не подписаны на пользователя.'), 'info')
         return redirect(url_for('.index', username=username))
 
     current_user.unfollow(user)
-    flash('Вы отписались от пользователя.', 'info')
+    flash(_('Вы отписались от пользователя.'), 'info')
     return redirect_back()
 
 
@@ -101,7 +102,7 @@ def edit_profile():
         current_user.website = form.website.data
         current_user.location = form.location.data
         db.session.commit()
-        flash('Профиль обновлен', 'success')
+        flash(_('Профиль обновлен'), 'success')
         return redirect(url_for('.index', username=current_user.username))
     form.name.data = current_user.name
     form.username.data = current_user.username
@@ -130,7 +131,7 @@ def upload_avatar():
         filename = avatars.save_avatar(image)
         current_user.avatar_raw = filename
         db.session.commit()
-        flash('Изображение загружено, пожалуйста обрежьте.', 'success')
+        flash(_('Изображение загружено, пожалуйста обрежьте.'), 'success')
     flash_errors(form)
     return redirect(url_for('.change_avatar'))
 
@@ -150,7 +151,7 @@ def crop_avatar():
         current_user.avatar_m = filenames[1]
         current_user.avatar_l = filenames[2]
         db.session.commit()
-        flash('Аватарка обновлена.', 'success')
+        flash(_('Аватарка обновлена.'), 'success')
     flash_errors(form)
     return redirect(url_for('.change_avatar'))
 
@@ -163,10 +164,10 @@ def change_password():
         if current_user.validate_password(form.old_password.data):
             current_user.set_password(form.password.data)
             db.session.commit()
-            flash('Пароль обновлен.', 'success')
+            flash(_('Пароль обновлен.'), 'success')
             return redirect(url_for('.index', username=current_user.username))
         else:
-            flash('Старый пароль введен неверно.', 'warning')
+            flash(_('Старый пароль введен неверно.'), 'warning')
     return render_template('user/settings/change_password.html', form=form)
 
 
@@ -177,7 +178,7 @@ def change_email_request():
     if form.validate_on_submit():
         token = generate_token(user=current_user, operation=Operations.CHANGE_EMAIL, new_email=form.email.data.lower())
         send_change_email_email(to=form.email.data, user=current_user, token=token)
-        flash('Письмо с подтверждением отправлено на вашу почту.', 'info')
+        flash(_('Письмо с подтверждением отправлено на вашу почту.'), 'info')
         return redirect(url_for('.index', username=current_user.username))
     return render_template('user/settings/change_email.html', form=form)
 
@@ -186,10 +187,10 @@ def change_email_request():
 @login_required
 def change_email(token):
     if validate_token(user=current_user, token=token, operation=Operations.CHANGE_EMAIL):
-        flash('Email обновлен.', 'success')
+        flash(_('Email обновлен.'), 'success')
         return redirect(url_for('.index', username=current_user.username))
     else:
-        flash('Неверный или просроченный токен.', 'warning')
+        flash(_('Неверный или просроченный токен.'), 'warning')
         return redirect(url_for('.change_email_request'))
 
 
@@ -202,7 +203,7 @@ def notification_setting():
         current_user.receive_comment_notification = form.receive_comment_notification.data
         current_user.receive_follow_notification = form.receive_follow_notification.data
         db.session.commit()
-        flash('Настройки уведомлений обновлены.', 'success')
+        flash(_('Настройки уведомлений обновлены.'), 'success')
         return redirect(url_for('.index', username=current_user.username))
     form.receive_collect_notification.data = current_user.receive_collect_notification
     form.receive_comment_notification.data = current_user.receive_comment_notification
@@ -217,7 +218,7 @@ def privacy_setting():
     if form.validate_on_submit():
         current_user.public_collections = form.public_collections.data
         db.session.commit()
-        flash('Настройки конфедициальности обновлены.', 'success')
+        flash(_('Настройки конфедициальности обновлены.'), 'success')
         return redirect(url_for('.index', username=current_user.username))
     form.public_collections.data = current_user.public_collections
     return render_template('user/settings/edit_privacy.html', form=form)
@@ -230,6 +231,6 @@ def delete_account():
     if form.validate_on_submit():
         db.session.delete(current_user._get_current_object())
         db.session.commit()
-        flash('Вы свободны, пока!', 'success')
+        flash(_('Вы свободны, пока!'), 'success')
         return redirect(url_for('main.index'))
     return render_template('user/settings/delete_account.html', form=form)

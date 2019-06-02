@@ -17,12 +17,12 @@
             <div class="ya-share2" data-services="vkontakte,facebook,twitter"></div>
             {% if current_user == photo.author or current_user.can('MODERATE') %}
                 <a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#confirm-delete"
-                   data-href="{{ url_for('.delete_photo', photo_id=photo.id) }}">Удалить</a>
+                   data-href="{{ url_for('.delete_photo', photo_id=photo.id) }}">{{ _('Удалить') }}</a>
             {% endif %}
             {% if current_user.is_authenticated and current_user != photo.author %}
                 <form class="inline" method="post" action="{{ url_for('.report_photo', photo_id=photo.id) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <button type="submit" class="btn btn-link btn-sm">Пожаловаться</button>
+                    <button type="submit" class="btn btn-link btn-sm">{{ _('Пожаловаться') }}</button>
                 </form>
             {% endif %}
             <p class="text-muted float-right small">
@@ -39,7 +39,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="shareModalLabel">Постоянная ссылка</h5>
+                    <h5 class="modal-title" id="shareModalLabel">{{ _('Постоянная ссылка') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -63,13 +63,13 @@
                                 aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <p>Вы уверены, что хотите удалить этот комментарий?</p>
+                        <p>{{ _('Вы уверены, что хотите удалить этот комментарий?') }}</p>
                     </div>
                     <div class="modal-footer">
                         <form class="delete-form" action="" method="post">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                            <button class="btn btn-danger btn-confirm" type="submit">Удалить</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ _('Отмена') }}</button>
+                            <button class="btn btn-danger btn-confirm" type="submit">{{ _('Удалить') }}</button>
                         </form>
                     </div>
                 </div>

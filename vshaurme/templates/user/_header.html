@@ -25,7 +25,7 @@
                    target="_blank">{{ user.location|truncate(30) }}</a>&nbsp;&nbsp;
             {% endif %}
             <span class="oi oi-calendar"></span>
-            Присоединился {{ moment(user.member_since).format('LL') }}
+            {{ _('Присоединился') }} {{ moment(user.member_since).format('LL') }}
         </p>
         <div>
             {% if current_user != user %}
@@ -57,13 +57,13 @@
                 {% endif %}
 
                 {% if current_user.is_admin %}
-                    <a class="btn btn-warning btn-sm" href="{{ url_for('admin.edit_profile_admin', user_id=user.id) }}">Редактировать профиль</a>
+                    <a class="btn btn-warning btn-sm" href="{{ url_for('admin.edit_profile_admin', user_id=user.id) }}">{{ _('Редактировать профиль') }}</a>
                 {% endif %}
             {% endif %}
             <div class="float-right">
                 {{ follow_area(user) }}
                 {% if current_user.is_authenticated and user == current_user %}
-                    <a class="btn btn-outline-primary btn-sm" href="{{ url_for('.edit_profile') }}">Редактировать профиль</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ url_for('.edit_profile') }}">{{ _('Редактировать профиль') }}</a>
                 {% endif %}
             </div>
         </div>

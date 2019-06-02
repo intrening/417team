@@ -21,9 +21,9 @@ class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
     username = StringField(_l('Имя пользователя'), validators=[DataRequired(), check_swear_usernames, 
                                                    Length(1, 20), Regexp('^[a-zA-Z0-9]*$',
-                                                          message='Имя пользователя должно состоять из a-z, A-Z или 0-9.')])
+                                                          message=_l('Имя пользователя должно состоять из a-z, A-Z или 0-9.'))])
     password = PasswordField(_l('Пароль'), validators=[
-        DataRequired(), Length(10, 128, message='Длина пароля должна быть не меньше 10 символов'), 
+        DataRequired(), Length(10, 128, message=_l('Длина пароля должна быть не меньше 10 символов')), 
              EqualTo('password2'), check_passwords_rules])
     password2 = PasswordField(_l('Подтвердите пароль'), validators=[DataRequired()])
     submit = SubmitField(_l('Присоединиться'))
@@ -32,24 +32,24 @@ class RegisterForm(FlaskForm):
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():
-            raise ValidationError('Этот email уже используется.')
+            raise ValidationError(_('Этот email уже используется.'))
 
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
-            raise ValidationError('Это имя пользователя уже используется.')
+            raise ValidationError(_('Это имя пользователя уже используется.'))
 
     
 
 
 class ForgetPasswordForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
-    submit = SubmitField('Подтвердить')
+    submit = SubmitField(_l('Подтвердить'))
 
 
 class ResetPasswordForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
     password = PasswordField('Пароль', validators=[
-        DataRequired(), Length(10, 128, message='Длина пароля должна быть не меньше 10 символов'), 
+        DataRequired(), Length(10, 128, message=_l('Длина пароля должна быть не меньше 10 символов')), 
              EqualTo('password2'), check_passwords_rules])
-    password2 = PasswordField('Подтвердите пароль', validators=[DataRequired()])
-    submit = SubmitField('Подтвердить')
+    password2 = PasswordField(_l('Подтвердите пароль'), validators=[DataRequired()])
+    submit = SubmitField(_l('Подтвердить'))
