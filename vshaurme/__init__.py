@@ -1,7 +1,7 @@
 import os
 
 import click
-from flask import Flask, render_template
+from flask import Flask, render_template, request, current_app
 from flask_login import current_user
 from flask_wtf.csrf import CSRFError
 
@@ -10,7 +10,7 @@ from vshaurme.blueprints.ajax import ajax_bp
 from vshaurme.blueprints.auth import auth_bp
 from vshaurme.blueprints.main import main_bp
 from vshaurme.blueprints.user import user_bp
-from vshaurme.extensions import bootstrap, db, login_manager, mail, dropzone, moment, whooshee, avatars, csrf
+from vshaurme.extensions import bootstrap, db, login_manager, mail, dropzone, moment, whooshee, avatars, csrf, babel
 from vshaurme.models import Role, User, Photo, Tag, Follow, Notification, Comment, Collect, Permission
 from vshaurme.settings import config
 import rollbar
@@ -46,6 +46,7 @@ def register_extensions(app):
     whooshee.init_app(app)
     avatars.init_app(app)
     csrf.init_app(app)
+    babel.init_app(app)
 
 
 def register_blueprints(app):
@@ -176,3 +177,9 @@ def register_rollbar(app):
     )
 
     got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+
+
+@babel.localeselector
+def get_locale():
+    # return request.accept_languages.best_match(current_app.config['LANGUAGES'])
+    return 'en'

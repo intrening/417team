@@ -1,0 +1,410 @@
+# English translations for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-06-02 19:16+0300\n"
+"PO-Revision-Date: 2019-06-02 17:05+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.7.0\n"
+
+#: vshaurme/blueprints/auth.py:25
+msgid "Вход выполнен успешно."
+msgstr "Login success."
+
+#: vshaurme/blueprints/auth.py:28
+msgid "Ваш аккаунт заблокирован."
+msgstr "Your account is blocked."
+
+#: vshaurme/blueprints/auth.py:30
+msgid "Неверный email или пароль."
+msgstr "Invalid email or password."
+
+#: vshaurme/blueprints/auth.py:51
+msgid "Выход выполнен успешно."
+msgstr "Logout success."
+
+#: vshaurme/blueprints/auth.py:72
+msgid "Письмо с подтверждением отправлено на вашу почту."
+msgstr "Confirm email sent, check your inbox."
+
+#: vshaurme/blueprints/auth.py:84
+msgid "Аккаунт подтвержден."
+msgstr "Account confirmed"
+
+#: vshaurme/blueprints/auth.py:87
+msgid "Неверный или просроченный токен."
+msgstr "Invalid or expired token."
+
+#: vshaurme/blueprints/auth.py:99
+msgid "Новое письмо отправлено, проверьте Входящие"
+msgstr "New email sent, check your inbox."
+
+#: vshaurme/blueprints/auth.py:114
+msgid "Письмо со сбросом пароля отправлено на вашу почту."
+msgstr "Password reset email sent, check your inbox."
+
+#: vshaurme/blueprints/auth.py:116
+msgid "Неверный email."
+msgstr "Invalid email."
+
+#: vshaurme/blueprints/auth.py:133
+msgid "Пароль обновлен."
+msgstr "Password updated."
+
+#: vshaurme/blueprints/auth.py:136
+msgid "Неверная или просроченная ссылка."
+msgstr "Invalid or expired link."
+
+#: vshaurme/blueprints/main.py:47
+msgid "Заполните это поле."
+msgstr "Enter keyword about photo, user or tag."
+
+#: vshaurme/blueprints/main.py:87
+msgid "Уведомления прочитаны."
+msgstr "Notification archived"
+
+#: vshaurme/blueprints/main.py:97
+msgid "Все уведомления прочитаны."
+msgstr "All notifications archived."
+
+#: vshaurme/blueprints/main.py:157
+msgid "Это и так последняя фотография."
+msgstr "This is already the last one."
+
+#: vshaurme/blueprints/main.py:168
+msgid "Это и так первая фотография."
+msgstr "This is already the first one."
+
+#: vshaurme/blueprints/main.py:180
+msgid "Уже в коллекции."
+msgstr "Already collected."
+
+#: vshaurme/blueprints/main.py:184
+msgid "Фото добавлено в коллекцию."
+msgstr "Photo collected"
+
+#: vshaurme/blueprints/main.py:195
+msgid "Еще не в коллекции."
+msgstr "Not collect yet."
+
+#: vshaurme/blueprints/main.py:199
+msgid "Фото удалено из коллекции."
+msgstr "Photo uncollected."
+
+#: vshaurme/blueprints/main.py:210
+msgid "Жалоба на комментарий отправлена."
+msgstr "Comment reported."
+
+#: vshaurme/blueprints/main.py:221
+msgid "Жалоба на фото отправлена."
+msgstr "Photo reported."
+
+#: vshaurme/blueprints/main.py:246
+msgid "Описание обновлено."
+msgstr "Description updated."
+
+#: vshaurme/blueprints/main.py:272
+msgid "Комментарий опубликован."
+msgstr "Comment published."
+
+#: vshaurme/blueprints/main.py:299
+msgid "Тег добавлен."
+msgstr "Tag added."
+
+#: vshaurme/blueprints/main.py:314
+msgid "Комментарии отключены"
+msgstr "Comment disabled"
+
+#: vshaurme/blueprints/main.py:317
+msgid "Комментарии включены."
+msgstr "Comment enabled"
+
+#: vshaurme/blueprints/main.py:341
+msgid "Фото удалено."
+msgstr "Photo deleted"
+
+#: vshaurme/blueprints/main.py:361
+msgid "Комментарий удален."
+msgstr "Comment deleted."
+
+#: vshaurme/blueprints/main.py:395
+msgid "Тег удален."
+msgstr "Tag deleted."
+
+#: vshaurme/forms/auth.py:14 vshaurme/forms/auth.py:25
+#: vshaurme/forms/user.py:54
+msgid "Пароль"
+msgstr "Password"
+
+#: vshaurme/forms/auth.py:15
+msgid "Запомнить меня"
+msgstr "Remember me"
+
+#: vshaurme/forms/auth.py:16 vshaurme/templates/base.html:81
+msgid "Войти"
+msgstr "Login"
+
+#: vshaurme/forms/auth.py:20 vshaurme/forms/user.py:13
+msgid "Имя"
+msgstr "Name"
+
+#: vshaurme/forms/auth.py:22 vshaurme/forms/user.py:14
+#: vshaurme/forms/user.py:74
+msgid "Имя пользователя"
+msgstr "Username"
+
+#: vshaurme/forms/auth.py:28 vshaurme/forms/user.py:57
+msgid "Подтвердите пароль"
+msgstr "Confirm password"
+
+#: vshaurme/forms/auth.py:29 vshaurme/templates/base.html:82
+#: vshaurme/templates/main/index.html:97
+msgid "Присоединиться"
+msgstr "Join Vshuarme"
+
+#: vshaurme/forms/user.py:17
+msgid "Вебсайт"
+msgstr "Website"
+
+#: vshaurme/forms/user.py:18
+msgid "Город"
+msgstr "City"
+
+#: vshaurme/forms/user.py:19
+msgid "О себе"
+msgstr "Bio"
+
+#: vshaurme/forms/user.py:20 vshaurme/forms/user.py:32
+#: vshaurme/forms/user.py:45 vshaurme/forms/user.py:58
+#: vshaurme/forms/user.py:65 vshaurme/forms/user.py:70
+msgid "Сохранить"
+msgstr "Save"
+
+#: vshaurme/forms/user.py:28
+msgid "Загрузить"
+msgstr "Upload"
+
+#: vshaurme/forms/user.py:40
+msgid "Обрезать и обновить"
+msgstr "Crop and Update"
+
+#: vshaurme/forms/user.py:44
+msgid "Новый Email"
+msgstr "New Email"
+
+#: vshaurme/forms/user.py:53
+msgid "Старый пароль"
+msgstr "Old Password"
+
+#: vshaurme/forms/user.py:62
+msgid "Новый комментарий"
+msgstr "New comment"
+
+#: vshaurme/forms/user.py:63
+msgid "Новый подписчик"
+msgstr "New follower"
+
+#: vshaurme/forms/user.py:64
+msgid "Новый коллекционер"
+msgstr "New collector"
+
+#: vshaurme/forms/user.py:69
+msgid "Публиковать мои коллекции"
+msgstr "Public my collection"
+
+#: vshaurme/forms/user.py:75
+msgid "Подтвердить"
+msgstr "Confirm"
+
+#: vshaurme/templates/base.html:33
+msgid "Главная"
+msgstr "Home"
+
+#: vshaurme/templates/base.html:34
+msgid "Случайные"
+msgstr "Explore"
+
+#: vshaurme/templates/base.html:62
+msgid "Вошел как"
+msgstr "Logged in as"
+
+#: vshaurme/templates/base.html:64
+msgid "Моя страница"
+msgstr "My Home"
+
+#: vshaurme/templates/base.html:68 vshaurme/templates/user/settings/base.html:7
+msgid "Настройки"
+msgstr "Settings"
+
+#: vshaurme/templates/base.html:72
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: vshaurme/templates/base.html:76
+msgid "Выйти"
+msgstr "Logout"
+
+#: vshaurme/templates/base.html:108
+msgid "Наслаждайся каждым куском шаурмы."
+msgstr "Enjoy every piece of shawarma."
+
+#: vshaurme/templates/macros.html:32
+msgid "Отписаться"
+msgstr "Unfollow"
+
+#: vshaurme/templates/macros.html:34
+msgid "Вы подписаны друг на друга"
+msgstr "Follow each other"
+
+#: vshaurme/templates/macros.html:41
+msgid "Подписаться"
+msgstr "Follow"
+
+#: vshaurme/templates/macros.html:43
+msgid "Подписан на вас"
+msgstr "Follows you"
+
+#: vshaurme/templates/admin/edit_profile.html:5
+#: vshaurme/templates/user/settings/base.html:12
+#: vshaurme/templates/user/settings/edit_profile.html:4
+#: vshaurme/templates/user/settings/edit_profile.html:8
+msgid "Редактировать профиль"
+msgstr "Edit profile"
+
+#: vshaurme/templates/auth/login.html:14
+msgid "Войти в Вшаурме"
+msgstr "Log in to Vshaurme"
+
+#: vshaurme/templates/auth/login.html:18
+msgid "Зарегистрировать новый аккаунт"
+msgstr "Register new account"
+
+#: vshaurme/templates/auth/login.html:19
+msgid "Забыли пароль?"
+msgstr "Forget password"
+
+#: vshaurme/templates/auth/register.html:14
+msgid "Добро пожаловать в Вшаурме!"
+msgstr "Welcome to Vshaurme!"
+
+#: vshaurme/templates/auth/register.html:18
+msgid "Уже есть аккаунт?"
+msgstr "Already have an account?"
+
+#: vshaurme/templates/auth/register.html:18
+msgid "Нажмите сюда, чтобы войти."
+msgstr "Click here to log in."
+
+#: vshaurme/templates/main/_sidebar.html:16
+msgid "Мои фотографии"
+msgstr "My Photos"
+
+#: vshaurme/templates/main/_sidebar.html:19
+msgid "Мои коллекции"
+msgstr "My Collections"
+
+#: vshaurme/templates/main/_sidebar.html:24
+msgid "Популярные теги"
+msgstr "Hot Tags"
+
+#: vshaurme/templates/main/index.html:5
+msgid "Главная страница"
+msgstr "Home"
+
+#: vshaurme/templates/main/index.html:50
+msgid "Удалить из коллекции"
+msgstr "Uncollect"
+
+#: vshaurme/templates/main/index.html:56 vshaurme/templates/main/index.html:63
+msgid "Добавить в коллекцию"
+msgstr "Collect"
+
+#: vshaurme/templates/main/index.html:77
+msgid "Поиск"
+msgstr "Explore"
+
+#: vshaurme/templates/main/index.html:95
+msgid "ВШаурме"
+msgstr "VShaurme"
+
+#: vshaurme/templates/main/index.html:96
+msgid "Найди лучшую шаурму!!!"
+msgstr "Find the best shaurma"
+
+#: vshaurme/templates/user/_header.html:74
+msgid "Фотографии"
+msgstr "Photo"
+
+#: vshaurme/templates/user/_header.html:75
+msgid "Коллекции"
+msgstr "Collections"
+
+#: vshaurme/templates/user/_header.html:76
+msgid "Подписки"
+msgstr "Following"
+
+#: vshaurme/templates/user/_header.html:77
+msgid "Подписчики"
+msgstr "Follower"
+
+#: vshaurme/templates/user/settings/base.html:13
+#: vshaurme/templates/user/settings/change_avatar.html:4
+#: vshaurme/templates/user/settings/change_avatar.html:13
+msgid "Изменить аватарку"
+msgstr "Change Avatar"
+
+#: vshaurme/templates/user/settings/base.html:14
+#: vshaurme/templates/user/settings/change_password.html:4
+#: vshaurme/templates/user/settings/change_password.html:8
+msgid "Изменить пароль"
+msgstr "Change Password"
+
+#: vshaurme/templates/user/settings/base.html:15
+#: vshaurme/templates/user/settings/change_email.html:4
+#: vshaurme/templates/user/settings/change_email.html:8
+msgid "Изменить Email"
+msgstr "Change Email"
+
+#: vshaurme/templates/user/settings/base.html:16
+msgid "Уведомления"
+msgstr "Notification"
+
+#: vshaurme/templates/user/settings/base.html:17
+msgid "Конфиденциальность"
+msgstr "Privacy"
+
+#: vshaurme/templates/user/settings/base.html:18
+#: vshaurme/templates/user/settings/delete_account.html:4
+#: vshaurme/templates/user/settings/delete_account.html:8
+msgid "Удалить аккаунт"
+msgstr "Delete Account"
+
+#: vshaurme/templates/user/settings/change_avatar.html:17
+msgid ""
+"Размер фашего файла должен быть меньше 3 MB, поддерживаются форматы png и"
+" jpg."
+msgstr ""
+"Your file's size must be less than 3 MB, the allowed formats are png and "
+"jpg."
+
+#: vshaurme/templates/user/settings/edit_notification.html:4
+#: vshaurme/templates/user/settings/edit_notification.html:8
+msgid "Настройки уведомлений"
+msgstr "Notification Settings"
+
+#: vshaurme/templates/user/settings/edit_privacy.html:4
+#: vshaurme/templates/user/settings/edit_privacy.html:8
+msgid "Настройки конфиденциальности"
+msgstr "Privacy Settings"
+

@@ -71,9 +71,9 @@
 </div>
 <div class="user-nav">
     <ul class="nav nav-tabs">
-        {{ render_nav_item('user.index', 'Фотографии', user.photos|length, username=user.username) }}
-        {{ render_nav_item('user.show_collections', 'Коллекции', user.collections|length, username=user.username) }}
-        {{ render_nav_item('user.show_following', 'Подписки', user.following.count() - 1, username=user.username) }}
-        {{ render_nav_item('user.show_followers', 'Подписчики', user.followers.count() - 1, username=user.username) }}
+        {{ render_nav_item('user.index', _('Фотографии'), user.photos|length, username=user.username) }}
+        {{ render_nav_item('user.show_collections', _('Коллекции'), user.collections|length, username=user.username) }}
+        {{ render_nav_item('user.show_following', _('Подписки'), user.following.count() - 1, username=user.username) }}
+        {{ render_nav_item('user.show_followers', _('Подписчики'), user.followers.count() - 1, username=user.username) }}
     </ul>
 </div>

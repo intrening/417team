@@ -1,4 +1,5 @@
 from flask import render_template, flash, redirect, url_for, Blueprint
+from flask_babel import _
 from flask_login import login_user, logout_user, login_required, current_user, login_fresh, confirm_login
 
 from vshaurme.emails import send_confirm_email, send_reset_password_email
@@ -21,12 +22,12 @@ def login():
         user = User.query.filter_by(email=form.email.data.lower()).first()
         if user is not None and user.validate_password(form.password.data):
             if login_user(user, form.remember_me.data):
-                flash('Вход выполнен успешно.', 'info')
+                flash(_('Вход выполнен успешно.'), 'info')
                 return redirect_back()
             else:
-                flash('Ваш аккаунт заблокирован.', 'warning')
+                flash(_('Ваш аккаунт заблокирован.'), 'warning')
                 return redirect(url_for('main.index'))
-        flash('Неверный email или пароль.', 'warning')
+        flash(_('Неверный email или пароль.'), 'warning')
     return render_template('auth/login.html', form=form)
 
 
@@ -47,7 +48,7 @@ def re_authenticate():
 @login_required
 def logout():
     logout_user()
-    flash('Выход выполнен успешно.', 'info')
+    flash(_('Выход выполнен успешно.'), 'info')
     return redirect(url_for('main.index'))
 
 
@@ -68,7 +69,7 @@ def register():
         db.session.commit()
         token = generate_token(user=user, operation='confirm')
         send_confirm_email(user=user, token=token)
-        flash('Письмо с подтверждением отправлено на вашу почту.', 'info')
+        flash(_('Письмо с подтверждением отправлено на вашу почту.'), 'info')
         return redirect(url_for('.login'))
     return render_template('auth/register.html', form=form)
 
@@ -80,10 +81,10 @@ def confirm(token):
         return redirect(url_for('main.index'))
 
     if validate_token(user=current_user, token=token, operation=Operations.CONFIRM):
-        flash('Аккаунт подтвержден.', 'success')
+        flash(_('Аккаунт подтвержден.'), 'success')
         return redirect(url_for('main.index'))
     else:
-        flash('Неверный или просроченный токен.', 'danger')
+        flash(_('Неверный или просроченный токен.'), 'danger')
         return redirect(url_for('.resend_confirm_email'))
 
 
@@ -95,7 +96,7 @@ def resend_confirm_email():
 
     token = generate_token(user=current_user, operation=Operations.CONFIRM)
     send_confirm_email(user=current_user, token=token)
-    flash('Новое письмо отправлено, проверьте Входящие', 'info')
+    flash(_('Новое письмо отправлено, проверьте Входящие'), 'info')
     return redirect(url_for('main.index'))
 
 
@@ -110,9 +111,9 @@ def forget_password():
         if user:
             token = generate_token(user=user, operation=Operations.RESET_PASSWORD)
             send_reset_password_email(user=user, token=token)
-            flash('Письмо со сбросом пароля отправлено на вашу почту.', 'info')
+            flash(_('Письмо со сбросом пароля отправлено на вашу почту.'), 'info')
             return redirect(url_for('.login'))
-        flash('Неверный email.', 'warning')
+        flash(_('Неверный email.'), 'warning')
         return redirect(url_for('.forget_password'))
     return render_template('auth/reset_password.html', form=form)
 
@@ -129,9 +130,9 @@ def reset_password(token):
             return redirect(url_for('main.index'))
         if validate_token(user=user, token=token, operation=Operations.RESET_PASSWORD,
                           new_password=form.password.data):
-            flash('Пароль обновлен.', 'success')
+            flash(_('Пароль обновлен.'), 'success')
             return redirect(url_for('.login'))
         else:
-            flash('Неверная или просроченная ссылка.', 'danger')
+            flash(_('Неверная или просроченная ссылка.'), 'danger')
             return redirect(url_for('.forget_password'))
     return render_template('auth/reset_password.html', form=form)

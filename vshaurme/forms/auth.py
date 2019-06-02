@@ -1,3 +1,5 @@
+from flask_babel import _
+from flask_babel import lazy_gettext as _l
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms import ValidationError
@@ -9,22 +11,22 @@ from vshaurme.models import User
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
-    password = PasswordField('Пароль', validators=[DataRequired()])
-    remember_me = BooleanField('Запомнить меня')
-    submit = SubmitField('Войти')
+    password = PasswordField(_l('Пароль'), validators=[DataRequired()])
+    remember_me = BooleanField(_l('Запомнить меня'))
+    submit = SubmitField(_l('Войти'))
 
     
 class RegisterForm(FlaskForm):
-    name = StringField('Имя', validators=[DataRequired(), Length(1, 30)])
+    name = StringField(_l('Имя'), validators=[DataRequired(), Length(1, 30)])
     email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
-    username = StringField('Имя пользователя', validators=[DataRequired(), check_swear_usernames, 
+    username = StringField(_l('Имя пользователя'), validators=[DataRequired(), check_swear_usernames, 
                                                    Length(1, 20), Regexp('^[a-zA-Z0-9]*$',
                                                           message='Имя пользователя должно состоять из a-z, A-Z или 0-9.')])
-    password = PasswordField('Пароль', validators=[
+    password = PasswordField(_l('Пароль'), validators=[
         DataRequired(), Length(10, 128, message='Длина пароля должна быть не меньше 10 символов'), 
              EqualTo('password2'), check_passwords_rules])
-    password2 = PasswordField('Подтвердите пароль', validators=[DataRequired()])
-    submit = SubmitField('Присоединиться')
+    password2 = PasswordField(_l('Подтвердите пароль'), validators=[DataRequired()])
+    submit = SubmitField(_l('Присоединиться'))
 
     
 

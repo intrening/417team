@@ -1,4 +1,5 @@
 from flask_avatars import Avatars
+from flask_babel import Babel
 from flask_bootstrap import Bootstrap
 from flask_dropzone import Dropzone
 from flask_login import LoginManager, AnonymousUserMixin
@@ -17,6 +18,7 @@ moment = Moment()
 whooshee = Whooshee()
 avatars = Avatars()
 csrf = CSRFProtect()
+babel = Babel()
 
 
 @login_manager.user_loader

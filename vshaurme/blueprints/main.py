@@ -2,6 +2,7 @@ import os
 
 from flask import render_template, flash, redirect, url_for, current_app, \
     send_from_directory, request, abort, Blueprint
+from flask_babel import _
 from flask_login import login_required, current_user
 from sqlalchemy.sql.expression import func
 
@@ -43,7 +44,7 @@ def explore():
 def search():
     q = request.args.get('q', '').strip()
     if q == '':
-        flash('Заполните это поле.', 'warning')
+        flash(_('Заполните это поле.'), 'warning')
         return redirect_back()
 
     category = request.args.get('category', 'photo')
@@ -83,7 +84,7 @@ def read_notification(notification_id):
 
     notification.is_read = True
     db.session.commit()
-    flash('Уведомления прочитаны.', 'success')
+    flash(_('Уведомления прочитаны.'), 'success')
     return redirect(url_for('.show_notifications'))
 
 
@@ -93,7 +94,7 @@ def read_all_notification():
     for notification in current_user.notifications:
         notification.is_read = True
     db.session.commit()
-    flash('Все уведомления прочитаны.', 'success')
+    flash(_('Все уведомления прочитаны.'), 'success')
     return redirect(url_for('.show_notifications'))
 
 
@@ -153,7 +154,7 @@ def photo_next(photo_id):
     photo_n = Photo.query.with_parent(photo.author).filter(Photo.id < photo_id).order_by(Photo.id.desc()).first()
 
     if photo_n is None:
-        flash('Это и так последняя фотография.', 'info')
+        flash(_('Это и так последняя фотография.'), 'info')
         return redirect(url_for('.show_photo', photo_id=photo_id))
     return redirect(url_for('.show_photo', photo_id=photo_n.id))
 
@@ -164,7 +165,7 @@ def photo_previous(photo_id):
     photo_p = Photo.query.with_parent(photo.author).filter(Photo.id > photo_id).order_by(Photo.id.asc()).first()
 
     if photo_p is None:
-        flash('Это и так первая фотография.', 'info')
+        flash(_('Это и так первая фотография.'), 'info')
         return redirect(url_for('.show_photo', photo_id=photo_id))
     return redirect(url_for('.show_photo', photo_id=photo_p.id))
 
@@ -176,11 +177,11 @@ def photo_previous(photo_id):
 def collect(photo_id):
     photo = Photo.query.get_or_404(photo_id)
     if current_user.is_collecting(photo):
-        flash('Уже в коллекции.', 'info')
+        flash(_('Уже в коллекции.'), 'info')
         return redirect(url_for('.show_photo', photo_id=photo_id))
 
     current_user.collect(photo)
-    flash('Фото добавлено в коллекцию.', 'success')
+    flash(_('Фото добавлено в коллекцию.'), 'success')
     if current_user != photo.author and photo.author.receive_collect_notification:
         push_collect_notification(collector=current_user, photo_id=photo_id, receiver=photo.author)
     return redirect(url_for('.show_photo', photo_id=photo_id))
@@ -191,11 +192,11 @@ def collect(photo_id):
 def uncollect(photo_id):
     photo = Photo.query.get_or_404(photo_id)
     if not current_user.is_collecting(photo):
-        flash('Еще не в коллекции.', 'info')
+        flash(_('Еще не в коллекции.'), 'info')
         return redirect(url_for('.show_photo', photo_id=photo_id))
 
     current_user.uncollect(photo)
-    flash('Фото удалено из коллекции.', 'info')
+    flash(_('Фото удалено из коллекции.'), 'info')
     return redirect(url_for('.show_photo', photo_id=photo_id))
 
 
@@ -206,7 +207,7 @@ def report_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     comment.flag += 1
     db.session.commit()
-    flash('Жалоба на комментарий отправлена.', 'success')
+    flash(_('Жалоба на комментарий отправлена.'), 'success')
     return redirect(url_for('.show_photo', photo_id=comment.photo_id))
 
 
@@ -217,7 +218,7 @@ def report_photo(photo_id):
     photo = Photo.query.get_or_404(photo_id)
     photo.flag += 1
     db.session.commit()
-    flash('Жалоба на фото отправлена.', 'success')
+    flash(_('Жалоба на фото отправлена.'), 'success')
     return redirect(url_for('.show_photo', photo_id=photo.id))
 
 
@@ -242,7 +243,7 @@ def edit_description(photo_id):
     if form.validate_on_submit():
         photo.description = form.description.data
         db.session.commit()
-        flash('Описание обновлено.', 'success')
+        flash(_('Описание обновлено.'), 'success')
 
     flash_errors(form)
     return redirect(url_for('.show_photo', photo_id=photo_id))
@@ -268,7 +269,7 @@ def new_comment(photo_id):
                 push_comment_notification(photo_id=photo.id, receiver=comment.replied.author)
         db.session.add(comment)
         db.session.commit()
-        flash('Комментарий опубликован.', 'success')
+        flash(_('Комментарий опубликован.'), 'success')
 
         if current_user != photo.author and photo.author.receive_comment_notification:
             push_comment_notification(photo_id, receiver=photo.author, page=page)
@@ -295,7 +296,7 @@ def new_tag(photo_id):
             if tag not in photo.tags:
                 photo.tags.append(tag)
                 db.session.commit()
-        flash('Тег добавлен.', 'success')
+        flash(_('Тег добавлен.'), 'success')
 
     flash_errors(form)
     return redirect(url_for('.show_photo', photo_id=photo_id))
@@ -310,10 +311,10 @@ def set_comment(photo_id):
 
     if photo.can_comment:
         photo.can_comment = False
-        flash('Комментарии отключены', 'info')
+        flash(_('Комментарии отключены'), 'info')
     else:
         photo.can_comment = True
-        flash('Комментарии включены.', 'info')
+        flash(_('Комментарии включены.'), 'info')
     db.session.commit()
     return redirect(url_for('.show_photo', photo_id=photo_id))
 
@@ -337,7 +338,7 @@ def delete_photo(photo_id):
 
     db.session.delete(photo)
     db.session.commit()
-    flash('Фото удалено.', 'info')
+    flash(_('Фото удалено.'), 'info')
 
     photo_n = Photo.query.with_parent(photo.author).filter(Photo.id < photo_id).order_by(Photo.id.desc()).first()
     if photo_n is None:
@@ -357,7 +358,7 @@ def delete_comment(comment_id):
         abort(403)
     db.session.delete(comment)
     db.session.commit()
-    flash('Комментарий удален.', 'info')
+    flash(_('Комментарий удален.'), 'info')
     return redirect(url_for('.show_photo', photo_id=comment.photo_id))
 
 
@@ -391,5 +392,5 @@ def delete_tag(photo_id, tag_id):
         db.session.delete(tag)
         db.session.commit()
 
-    flash('Тег удален.', 'info')
+    flash(_('Тег удален.'), 'info')
     return redirect(url_for('.show_photo', photo_id=photo_id))

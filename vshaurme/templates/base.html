@@ -30,8 +30,8 @@
 
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <div class="navbar-nav mr-auto">
-                    {{ render_nav_item('main.index', 'Главная') }}
-                    {{ render_nav_item('main.explore', 'Случайные') }}
+                    {{ render_nav_item('main.index', _('Главная')) }}
+                    {{ render_nav_item('main.explore', _('Случайные')) }}
                     <form class="form-inline my-2 my-lg-0" action="{{ url_for('main.search') }}">
                         <input type="text" name="q" class="form-control mr-sm-1" placeholder="Фото, тег или пользователь"
                                required>
@@ -59,27 +59,27 @@
                             <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" role="menu">
-                            <h6 class="dropdown-header">Вошел как {{ current_user.username }}</h6>
+                            <h6 class="dropdown-header">{{ _('Вошел как') }} {{ current_user.username }}</h6>
                             <a class="dropdown-item" href="{{ url_for('user.index', username=current_user.username) }}">
-                                <span class="oi oi-person"></span> Моя страница
+                                <span class="oi oi-person"></span> {{ _('Моя страница') }}
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url_for('user.edit_profile') }}">
-                                <span class="oi oi-cog"></span> Настройки
+                                <span class="oi oi-cog"></span> {{ _('Настройки') }}
                             </a>
                             {% if current_user.can('MODERATE') %}
                                 <a class="dropdown-item" href="{{ url_for('admin.index') }}">
-                                    <span class="oi oi-dashboard"></span> Dashboard
+                                    <span class="oi oi-dashboard"></span> {{ _('Dashboard') }}
                                 </a>
                             {% endif %}
                             <a class="dropdown-item" href="{{ url_for('auth.logout') }}">
-                                <span class="oi oi-power-standby"></span> Выйти
+                                <span class="oi oi-power-standby"></span> {{ _('Выйти') }}
                             </a>
                         </div>
                     </div>
                 {% else %}
-                    <a class="btn btn-outline-primary" href="{{ url_for('auth.login') }}">Войти</a>&nbsp;&nbsp;
-                    <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Присоединиться</a>
+                    <a class="btn btn-outline-primary" href="{{ url_for('auth.login') }}">{{ _('Войти') }}</a>&nbsp;&nbsp;
+                    <a class="btn btn-primary" href="{{ url_for('auth.register') }}">{{ _('Присоединиться') }}</a>
                 {% endif %}
                 </div>
             </div>
@@ -105,7 +105,7 @@
                     </small>
                 </p>
                 <p class="float-right">
-                    <small>Наслаждайся каждым куском шаурмы.</small>
+                    <small>{{ _('Наслаждайся каждым куском шаурмы.') }}</small>
                 </p>
             </footer>
         {% endblock %}
