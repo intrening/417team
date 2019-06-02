@@ -4,7 +4,6 @@ import click
 from flask import Flask, render_template
 from flask_login import current_user
 from flask_wtf.csrf import CSRFError
-from flask_babel import Babel
 
 from vshaurme.blueprints.admin import admin_bp
 from vshaurme.blueprints.ajax import ajax_bp
@@ -17,7 +16,6 @@ from vshaurme.settings import config
 import rollbar
 import rollbar.contrib.flask
 from flask import got_request_exception
-from flask import request
 
 
 def create_app(config_name=None):
@@ -25,12 +23,7 @@ def create_app(config_name=None):
         config_name = os.getenv('FLASK_CONFIG', 'development')
 
     app = Flask('vshaurme')
-    babel = Babel(app)
     
-    @babel.localeselector   
-    def get_locale():
-        return request.accept_languages.best_match(app.config['LANGUAGES'])
-        
     app.config.from_object(config[config_name])
 
     register_extensions(app)

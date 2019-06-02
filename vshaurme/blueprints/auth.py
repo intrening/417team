@@ -7,7 +7,6 @@ from vshaurme.forms.auth import LoginForm, RegisterForm, ForgetPasswordForm, Res
 from vshaurme.models import User
 from vshaurme.settings import Operations
 from vshaurme.utils import generate_token, validate_token, redirect_back
-from flask_babel import _
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -113,7 +112,7 @@ def forget_password():
             send_reset_password_email(user=user, token=token)
             flash('Письмо со сбросом пароля отправлено на вашу почту.', 'info')
             return redirect(url_for('.login'))
-        flash(_('Неверный емайл'), 'warning')
+        flash('Неверный email.', 'warning')
         return redirect(url_for('.forget_password'))
     return render_template('auth/reset_password.html', form=form)
 
