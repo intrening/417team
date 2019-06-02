@@ -304,6 +304,7 @@ def new_tag(photo_id):
 
 @main_bp.route('/set-comment/<int:photo_id>', methods=['POST'])
 @login_required
+@confirm_required
 def set_comment(photo_id):
     photo = Photo.query.get_or_404(photo_id)
     if current_user != photo.author:
@@ -322,6 +323,7 @@ def set_comment(photo_id):
 @main_bp.route('/reply/comment/<int:comment_id>')
 @login_required
 @permission_required('COMMENT')
+@confirm_required
 def reply_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     return redirect(
