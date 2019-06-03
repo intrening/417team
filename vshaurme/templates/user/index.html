@@ -16,9 +16,9 @@
                 <div class="tip text-center">
                     <h3>No photos.</h3>
                     {% if user == current_user %}
-                        <a class="btn btn-link" href="{{ url_for('main.upload') }}">Загрузить</a>
+                        <a class="btn btn-link" href="{{ url_for('main.upload') }}">{{ _('Загрузить') }}</a>
                     {% else %}
-                        <a class="btn btn-link" href="{{ url_for('main.explore') }}">Поиск</a>
+                        <a class="btn btn-link" href="{{ url_for('main.explore') }}">{{ _('Поиск') }}</a>
                     {% endif %}
                 </div>
             {% endif %}

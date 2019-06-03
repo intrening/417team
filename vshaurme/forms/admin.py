@@ -1,3 +1,4 @@
+from flask_babel import _
 from wtforms import StringField, SelectField, BooleanField, SubmitField
 from wtforms import ValidationError
 from wtforms.validators import DataRequired, Length, Email
@@ -21,8 +22,8 @@ class EditProfileAdminForm(EditProfileForm):
 
     def validate_username(self, field):
         if field.data != self.user.username and User.query.filter_by(username=field.data).first():
-            raise ValidationError('Имя пользователя уже используется.')
+            raise ValidationError(_('Имя пользователя уже используется.'))
 
     def validate_email(self, field):
         if field.data != self.user.email and User.query.filter_by(email=field.data.lower()).first():
-            raise ValidationError('Email уже используется')
+            raise ValidationError(_('Email уже используется'))

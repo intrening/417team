@@ -48,7 +48,7 @@ class ForgetPasswordForm(FlaskForm):
 
 class ResetPasswordForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
-    password = PasswordField('Пароль', validators=[
+    password = PasswordField(_l('Пароль'), validators=[
         DataRequired(), Length(10, 128, message=_l('Длина пароля должна быть не меньше 10 символов')), 
              EqualTo('password2'), check_passwords_rules])
     password2 = PasswordField(_l('Подтвердите пароль'), validators=[DataRequired()])

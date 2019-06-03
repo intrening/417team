@@ -1,4 +1,5 @@
 from flask import render_template, flash, Blueprint, request, current_app
+from flask_babel import _
 from flask_login import login_required
 
 from vshaurme.decorators import admin_required, permission_required
@@ -48,7 +49,7 @@ def edit_profile_admin(user_id):
         user.username = form.username.data
         user.email = form.email.data
         db.session.commit()
-        flash('Профиль обновлен', 'success')
+        flash(_('Профиль обновлен'), 'success')
         return redirect_back()
     form.name.data = user.name
     form.role.data = user.role_id
@@ -68,10 +69,10 @@ def edit_profile_admin(user_id):
 def block_user(user_id):
     user = User.query.get_or_404(user_id)
     if user.role.name in ['Administrator', 'Moderator']:
-        flash('Доступ запрещен.', 'warning')
+        flash(_('Доступ запрещен.'), 'warning')
     else:
         user.block()
-        flash('Аккаунт заблокирован.', 'info')
+        flash(_('Аккаунт заблокирован.'), 'info')
     return redirect_back()
 
 
@@ -81,7 +82,7 @@ def block_user(user_id):
 def unblock_user(user_id):
     user = User.query.get_or_404(user_id)
     user.unblock()
-    flash('Аккаунт разблокирован.', 'info')
+    flash(_('Аккаунт разблокирован.'), 'info')
     return redirect_back()
 
 
@@ -91,10 +92,10 @@ def unblock_user(user_id):
 def lock_user(user_id):
     user = User.query.get_or_404(user_id)
     if user.role.name in ['Administrator', 'Moderator']:
-        flash('Доступ запрещен.', 'warning')
+        flash(_('Доступ запрещен.'), 'warning')
     else:
         user.lock()
-        flash('Аккаунт закрыт.', 'info')
+        flash(_('Аккаунт закрыт.'), 'info')
     return redirect_back()
 
 
@@ -104,7 +105,7 @@ def lock_user(user_id):
 def unlock_user(user_id):
     user = User.query.get_or_404(user_id)
     user.unlock()
-    flash('Аккаут открыт.', 'info')
+    flash(_('Аккаут открыт.'), 'info')
     return redirect_back()
 
 
@@ -115,7 +116,7 @@ def delete_tag(tag_id):
     tag = Tag.query.get_or_404(tag_id)
     db.session.delete(tag)
     db.session.commit()
-    flash('Тег удален.', 'info')
+    flash(_('Тег удален.'), 'info')
     return redirect_back()
 
 

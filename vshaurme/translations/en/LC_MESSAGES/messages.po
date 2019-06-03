@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-06-03 01:38+0300\n"
+"POT-Creation-Date: 2019-06-03 14:34+0300\n"
 "PO-Revision-Date: 2019-06-02 17:05+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -17,6 +17,44 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
+
+#: vshaurme/decorators.py:13
+#, python-format
+msgid ""
+"Пожалуйста, сначала подтвердите аккаунт.Не получили email?<a class"
+"=\"alert-link\" href=\"%s\">Отправить Email с подтверждением снова</a>"
+msgstr ""
+
+#: vshaurme/emails.py:21
+msgid "Подтверждение Email"
+msgstr "Email Confirm"
+
+#: vshaurme/emails.py:25
+msgid "Смена пароля"
+msgstr "Password Reset"
+
+#: vshaurme/emails.py:29
+msgid "Изменение Email"
+msgstr "Change Email Confirm"
+
+#: vshaurme/notifications.py:9
+#, python-format
+msgid "Пользователь <a href=\"%s\">%s</a> подписался на вас."
+msgstr "User <a href="%s">%s</a> followed you."
+
+#: vshaurme/notifications.py:15
+#, python-format
+msgid ""
+"<a href=\"%s#comments\">Под этой фотографией</a> появился новый "
+"комментарий/reply."
+msgstr "<a href="%s#comments">This photo</a> has new comment/reply."
+
+#: vshaurme/notifications.py:21
+#, python-format
+msgid ""
+"Пользователь <a href=\"%s\">%s</a> добавил ваше фото в свою коллекцию <a "
+"href=\"%s\">photo</a>"
+msgstr "User <a href="%s">%s</a> collected your <a href="%s">photo</a>"
 
 #: vshaurme/validators.py:9
 msgid "Имя пользователя не должно содержать бранных слов"
@@ -37,6 +75,34 @@ msgstr "The password should not consist only of lowercase letters"
 #: vshaurme/validators.py:20
 msgid "Пароль не должен состоять только из букв верхнего регистра"
 msgstr "The password should not consist only of uppercase letters"
+
+#: vshaurme/blueprints/admin.py:52 vshaurme/blueprints/user.py:105
+msgid "Профиль обновлен"
+msgstr "Profile updated."
+
+#: vshaurme/blueprints/admin.py:72 vshaurme/blueprints/admin.py:95
+msgid "Доступ запрещен."
+msgstr "Permission denied."
+
+#: vshaurme/blueprints/admin.py:75
+msgid "Аккаунт заблокирован."
+msgstr "Account blocked."
+
+#: vshaurme/blueprints/admin.py:85
+msgid "Аккаунт разблокирован."
+msgstr "Block canceled."
+
+#: vshaurme/blueprints/admin.py:98
+msgid "Аккаунт закрыт."
+msgstr "Account locked."
+
+#: vshaurme/blueprints/admin.py:108
+msgid "Аккаут открыт."
+msgstr "Lock canceled."
+
+#: vshaurme/blueprints/admin.py:119 vshaurme/blueprints/main.py:397
+msgid "Тег удален."
+msgstr "Tag deleted."
 
 #: vshaurme/blueprints/ajax.py:14 vshaurme/blueprints/ajax.py:43
 #: vshaurme/blueprints/ajax.py:75 vshaurme/blueprints/ajax.py:94
@@ -203,10 +269,6 @@ msgstr "Photo deleted"
 msgid "Комментарий удален."
 msgstr "Comment deleted."
 
-#: vshaurme/blueprints/main.py:397
-msgid "Тег удален."
-msgstr "Tag deleted."
-
 #: vshaurme/blueprints/user.py:22
 msgid "Ваш аккаут закрыт."
 msgstr "Your account is locked."
@@ -222,10 +284,6 @@ msgstr "Not follow yet."
 #: vshaurme/blueprints/user.py:70
 msgid "Вы отписались от пользователя."
 msgstr "User unfollowed."
-
-#: vshaurme/blueprints/user.py:105
-msgid "Профиль обновлен"
-msgstr "Profile updated."
 
 #: vshaurme/blueprints/user.py:134
 msgid "Изображение загружено, пожалуйста обрежьте."
@@ -255,8 +313,16 @@ msgstr "Privacy settings updated."
 msgid "Вы свободны, пока!"
 msgstr "Your are free, goodbye!"
 
+#: vshaurme/forms/admin.py:25
+msgid "Имя пользователя уже используется."
+msgstr "The username is already in use."
+
+#: vshaurme/forms/admin.py:29
+msgid "Email уже используется"
+msgstr "The email is already in use."
+
 #: vshaurme/forms/auth.py:14 vshaurme/forms/auth.py:25
-#: vshaurme/forms/user.py:55
+#: vshaurme/forms/auth.py:51 vshaurme/forms/user.py:55
 msgid "Пароль"
 msgstr "Password"
 
@@ -348,7 +414,8 @@ msgstr "Save"
 msgid "Такое имя пользователя уже занято."
 msgstr "The username is already in use."
 
-#: vshaurme/forms/user.py:29
+#: vshaurme/forms/user.py:29 vshaurme/templates/main/upload.html:3
+#: vshaurme/templates/main/upload.html:13 vshaurme/templates/user/index.html:19
 msgid "Загрузить"
 msgstr "Upload"
 
@@ -595,6 +662,7 @@ msgstr "Reply"
 
 #: vshaurme/templates/main/_comment.html:59
 #: vshaurme/templates/main/photo.html:20 vshaurme/templates/main/photo.html:72
+#: vshaurme/templates/main/tag.html:15
 msgid "Удалить"
 msgstr "Delete"
 
@@ -684,7 +752,7 @@ msgstr "Change"
 msgid "Главная страница"
 msgstr "Home"
 
-#: vshaurme/templates/main/index.html:77
+#: vshaurme/templates/main/index.html:77 vshaurme/templates/user/index.html:21
 msgid "Поиск"
 msgstr "Explore"
 
@@ -760,6 +828,26 @@ msgstr "Tag"
 msgid "Нет результатов."
 msgstr "No results."
 
+#: vshaurme/templates/main/tag.html:11
+msgid "фотографий"
+msgstr "photos"
+
+#: vshaurme/templates/main/tag.html:21
+msgid "Сортировать по"
+msgstr "Order by"
+
+#: vshaurme/templates/main/tag.html:25
+msgid ""
+"Сортировать по\n"
+"                    времени"
+msgstr "Order by Time"
+
+#: vshaurme/templates/main/tag.html:28
+msgid ""
+"Сортировать по\n"
+"                    коллекционерам"
+msgstr "Order by Collects"
+
 #: vshaurme/templates/user/_header.html:28
 msgid "Присоединился"
 msgstr "Joined"
@@ -771,6 +859,22 @@ msgstr "Collections"
 #: vshaurme/templates/user/_header.html:76
 msgid "Подписки"
 msgstr "Following"
+
+#: vshaurme/templates/user/collections.html:18
+msgid "Нет коллекций."
+msgstr "No collection."
+
+#: vshaurme/templates/user/collections.html:23
+msgid "Коллекции этого пользователя приватны."
+msgstr "This user's collections was private."
+
+#: vshaurme/templates/user/followers.html:19
+msgid "Нет подписчиков."
+msgstr "No followers."
+
+#: vshaurme/templates/user/following.html:19
+msgid "Нет подписок."
+msgstr "No followings."
 
 #: vshaurme/templates/user/settings/base.html:13
 #: vshaurme/templates/user/settings/change_avatar.html:4
@@ -811,4 +915,16 @@ msgstr "Notification Settings"
 #: vshaurme/templates/user/settings/edit_privacy.html:8
 msgid "Настройки конфиденциальности"
 msgstr "Privacy Settings"
+
+#~ msgid "Пожалуйста, сначала подтвердите аккаунт."
+#~ msgstr "Please confirm your account first."
+
+#~ msgid "Не получили email?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Not receive the email?<a class=\"alert-"
+#~ "link\" href=\"%s\">Отправить Email с "
+#~ "подтверждением снова</a>"
+#~ msgstr "<a class=\"alert-link\" href=\"%s\">Resend Confirm Email</a>"
 
