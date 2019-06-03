@@ -13,7 +13,7 @@ from vshaurme.blueprints.user import user_bp
 from vshaurme.extensions import bootstrap, db, login_manager, mail, dropzone, moment, whooshee, avatars, csrf, babel
 from vshaurme.models import Role, User, Photo, Tag, Follow, Notification, Comment, Collect, Permission
 from vshaurme.settings import config
-from vshaurme.utils import load_users_emails_csv
+from vshaurme.utils import upload_users_emails_csv
 import rollbar
 import rollbar.contrib.flask
 from flask import got_request_exception
@@ -159,12 +159,12 @@ def register_commands(app):
         click.echo('Done.')
 
     @app.cli.command()
-    @click.argument('filename')
-    def emailsload(filename):
+    @click.argument('csv_filename')
+    def emailsload(csv_filename):
         """Loading emails."""
 
         click.echo('Loading emails')
-        load_users_emails_csv(filename)
+        upload_users_emails_csv(csv_filename)
         click.echo('Done')
 
 

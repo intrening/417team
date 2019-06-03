@@ -100,10 +100,10 @@ def flash_errors(form):
             ))
 
 
-def load_users_emails_csv(name):
+def upload_users_emails_csv(csv_filename):
     emails_names = db.session.query(User.email, User.name).all()
 
-    with open(name, 'w') as csvfile:
+    with open(csv_filename, 'w') as csvfile:
         filewriter = csv.writer(csvfile, delimiter=',')
 
         filewriter.writerow(['Email', 'Name'])
