@@ -17,4 +17,4 @@ def check_passwords_rules(form, field):
         elif field.data.islower():
             raise ValidationError(_('Пароль не должен состоять только из букв нижнего регистра'))
         elif field.data.isupper():
-            raise ValidationError(_('Пароль не должен состоять только из букв верхнего регистра'))
+            raise ValidationError(_('Пароль не должен состоять только из букв верхнего Регистра'))
