@@ -181,5 +181,4 @@ def register_rollbar(app):
 
 @babel.localeselector
 def get_locale():
-    # return request.accept_languages.best_match(current_app.config['LANGUAGES'])
-    return 'en'
+    return request.accept_languages.best_match(current_app.config['LANGUAGES'])
