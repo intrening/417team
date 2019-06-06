@@ -1,6 +1,6 @@
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms import ValidationError
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp
@@ -26,6 +26,7 @@ class RegisterForm(FlaskForm):
         DataRequired(), Length(10, 128, message=_l('Длина пароля должна быть не меньше 10 символов')), 
              EqualTo('password2'), check_passwords_rules])
     password2 = PasswordField(_l('Подтвердите пароль'), validators=[DataRequired()])
+    recapcha = RecaptchaField()
     submit = SubmitField(_l('Присоединиться'))
 
     
