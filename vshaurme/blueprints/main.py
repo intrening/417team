@@ -1,5 +1,3 @@
-import os
-
 from flask import render_template, flash, redirect, url_for, current_app, \
     send_from_directory, request, abort, Blueprint
 from flask_babel import _
@@ -12,6 +10,10 @@ from vshaurme.forms.main import DescriptionForm, TagForm, CommentForm
 from vshaurme.models import User, Photo, Tag, Follow, Collect, Comment, Notification
 from vshaurme.notifications import push_comment_notification, push_collect_notification
 from vshaurme.utils import rename_image, resize_image, redirect_back, flash_errors
+
+import os
+import vk
+import requests
 
 main_bp = Blueprint('main', __name__)
 
@@ -129,6 +131,37 @@ def upload():
         db.session.commit()
     return render_template('main/upload.html')
 
+@main_bp.route('/upload_photo_vk/<int:photo_id>')
+def upload_photo_vk(photo_id):
+    # Задаём идентификатор группы, токен доступа, картинку и её описание
+    group_id = '7008741'
+    access_token = '5683050dc7f9c440a544be68049320d805e6bec9ad51f2b23d4b6b075ad9a6f6a3a8f52be856b06ada305'
+    filename = 'image.jpg'
+    caption = 'Some text'
+
+    session = vk.Session(access_token=access_token)
+    vk_api = vk.API(session)
+
+    # Получаем адрес сервера для загрузки картинки
+    upload_url = vk_api.photos.getWallUploadServer(group_id=group_id,v='5.95')['upload_url']
+    photo = Photo.query.get_or_404(photo_id)
+    #for key,value in photo.items():
+    #    print (key,values)
+    #print (photo)
+    filename = url_for('.get_image', filename=photo.filename)
+    #return filename
+    # Формируем данные параметров для сохранения картинки на сервере
+    request = requests.post(upload_url, files={'photo': open(filename, "rb")})
+    params = {'server': request.json()['server'],
+            'photo': request.json()['photo'],
+            'hash': request.json()['hash'],
+            'hash': request.json()['hash'],
+            'group_id': group_id}
+
+    # Сохраняем картинку на сервере и получаем её идентификатор
+    photo_id = vk_api.photos.saveWallPhoto(**params)[0]['id']
+
+    return photo_id
 
 @main_bp.route('/photo/<int:photo_id>')
 def show_photo(photo_id):
