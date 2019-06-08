@@ -13,16 +13,43 @@
             </a>
         </div>
         <button id='btnVKpost'
-            onclick="postVK('{{request.url_root[:-1]}}{{ url_for('.get_image', filename=photo.filename) }}')">Сделать
+            onclick="initVK('{{request.url_root[:-1]}}{{ url_for('.get_image', filename=photo.filename) }}')">Сделать
             пост в VK</button>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <script>
-            let postVK = img => {
-                console.log (img);
+            function initVK(img) {
                 $.getScript('http://vk.com/js/api/openapi.js', function () {
                     VK.init({
                         apiId: 7008741,
                     });
+                    VK.Auth.login(
+                        function (response) {
+                            console.log(response);
+                            if (response.status != 'connected') {
+                                alert('Нет доступа к стене, повторите попытку');
+                                //uploadPhotoVK(img);
+                            } else {
+                                wallpostPhotoVK(img);
+                            }
+                        },
+                        8196)
+                });
+            };
+
+            // function uploadPhotoVK(img) {
+            //     $.getScript('http://vk.com/js/api/openapi.js', function () {
+            //         console.log (VK.Api.call(
+            //             'photos.getWallUploadServer ', {
+            //                 //group_id: 0,
+            //                 v: 5.95,
+            //                 // attachments: img
+            //             }
+            //         ))
+            //     });
+            // }
+
+            function wallpostPhotoVK(img) {
+                $.getScript('http://vk.com/js/api/openapi.js', function () {
                     VK.Api.call(
                         'wall.post', {
                             message: 'test',
@@ -30,14 +57,14 @@
                             attachments: img
                         },
                         function (response) {
-                            console.log(response);
+                            console.log('wall post SUCCESS');
                             if (response.error) {
                                 alert('Нет доступа к стене, повторите попытку')
                             } else {
                                 $("#btnVKpost").html('Фотография добавлена на стену!');
                             }
                         }
-                    );
+                    )
                 });
             }
         </script>
