@@ -20,44 +20,33 @@
             function initVK(img) {
                 $.getScript('http://vk.com/js/api/openapi.js', function () {
                     VK.init({
-                        apiId: 7008741,
+                        apiId: 7014173,
                     });
-                    VK.Auth.login(
-                        function (response) {
-                            console.log(response);
-                            if (response.status != 'connected') {
-                                alert('Нет доступа к стене, повторите попытку');
-                                //uploadPhotoVK(img);
-                            } else {
-                                wallpostPhotoVK(img);
-                            }
-                        },
-                        8196)
+                    getPhotoID(`{{ url_for('.get_image', filename=photo.id) }}`)
+                                    .then(photo_link => {
+                                        wallpostPhotoVK(photo_link);
+                                    });
                 });
             };
 
-            // function uploadPhotoVK(img) {
-            //     $.getScript('http://vk.com/js/api/openapi.js', function () {
-            //         console.log (VK.Api.call(
-            //             'photos.getWallUploadServer ', {
-            //                 //group_id: 0,
-            //                 v: 5.95,
-            //                 // attachments: img
-            //             }
-            //         ))
-            //     });
-            // }
+            function getPhotoID(img) {
+                url = `/upload_photo_vk${img}`
+                return fetch(url)
+                    .then(result => result.json())
+                    .catch(error => {
+                        console.log(error)
+                    })
+            };
 
             function wallpostPhotoVK(img) {
                 $.getScript('http://vk.com/js/api/openapi.js', function () {
                     VK.Api.call(
                         'wall.post', {
-                            message: 'test',
+                            message: 'Vshaurme',
                             v: 5.95,
-                            attachments: 'photo184100_456243447'
+                            attachments: img
                         },
                         function (response) {
-                            console.log('wall post SUCCESS');
                             if (response.error) {
                                 alert('Нет доступа к стене, повторите попытку')
                             } else {

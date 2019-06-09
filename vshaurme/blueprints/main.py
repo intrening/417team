@@ -14,6 +14,7 @@ from vshaurme.utils import rename_image, resize_image, redirect_back, flash_erro
 import os
 import vk
 import requests
+from flask import jsonify
 
 main_bp = Blueprint('main', __name__)
 
@@ -131,37 +132,30 @@ def upload():
         db.session.commit()
     return render_template('main/upload.html')
 
-@main_bp.route('/upload_photo_vk/<int:photo_id>')
+@main_bp.route('/upload_photo_vk/uploads/<int:photo_id>')
 def upload_photo_vk(photo_id):
-    # Задаём идентификатор группы, токен доступа, картинку и её описание
-    group_id = '7008741'
-    access_token = '5683050dc7f9c440a544be68049320d805e6bec9ad51f2b23d4b6b075ad9a6f6a3a8f52be856b06ada305'
-    filename = 'image.jpg'
-    caption = 'Some text'
+    access_token = current_app.config['VK_TOKEN'],
+    group_id = '184100'
 
     session = vk.Session(access_token=access_token)
     vk_api = vk.API(session)
 
-    # Получаем адрес сервера для загрузки картинки
-    upload_url = vk_api.photos.getWallUploadServer(group_id=group_id,v='5.95')['upload_url']
+    upload_url = vk_api.photos.getWallUploadServer (group_id=group_id, v='5.95')['upload_url']
     photo = Photo.query.get_or_404(photo_id)
-    #for key,value in photo.items():
-    #    print (key,values)
-    #print (photo)
     filename = url_for('.get_image', filename=photo.filename)
-    #return filename
-    # Формируем данные параметров для сохранения картинки на сервере
-    request = requests.post(upload_url, files={'photo': open(filename, "rb")})
+    
+    request = requests.post(upload_url, files={'photo': open(os.getcwd() + filename, "rb")})
     params = {'server': request.json()['server'],
             'photo': request.json()['photo'],
             'hash': request.json()['hash'],
             'hash': request.json()['hash'],
-            'group_id': group_id}
-
-    # Сохраняем картинку на сервере и получаем её идентификатор
-    photo_id = vk_api.photos.saveWallPhoto(**params)[0]['id']
-
-    return photo_id
+            'group_id': group_id,
+            'v':'5.95'}
+    photo = vk_api.photos.saveWallPhoto(**params)[0]
+    photo_id = photo['id']
+    photo_link = 'photo'+ str(photo['owner_id']) + '_' + str(photo['id'])
+    return jsonify(photo_link)
+    
 
 @main_bp.route('/photo/<int:photo_id>')
 def show_photo(photo_id):

@@ -27,4 +27,5 @@ Werkzeug==0.15.2
 Whoosh==2.7.4
 WTForms==2.2.1
 rollbar==0.14.7
-babel
+Flask-Babel==0.12.2
+VK==2.0.2
