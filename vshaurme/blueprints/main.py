@@ -135,7 +135,7 @@ def upload():
 @main_bp.route('/upload_photo_vk/uploads/<int:photo_id>')
 def upload_photo_vk(photo_id):
     access_token = current_app.config['VK_TOKEN'],
-    group_id = '184100'
+    group_id = '33650185'
 
     session = vk.Session(access_token=access_token)
     vk_api = vk.API(session)
@@ -143,6 +143,7 @@ def upload_photo_vk(photo_id):
     upload_url = vk_api.photos.getWallUploadServer (group_id=group_id, v='5.95')['upload_url']
     photo = Photo.query.get_or_404(photo_id)
     filename = url_for('.get_image', filename=photo.filename)
+    
     
     request = requests.post(upload_url, files={'photo': open(os.getcwd() + filename, "rb")})
     params = {'server': request.json()['server'],
