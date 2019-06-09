@@ -134,8 +134,8 @@ def upload():
 
 @main_bp.route('/upload_photo_vk/uploads/<int:photo_id>')
 def upload_photo_vk(photo_id):
-    access_token = current_app.config['VK_TOKEN'],
-    group_id = '33650185'
+    access_token = 'a072ab9bf5eeca93b167fe9d33fefda8b784ebc6520dbba5bd415f6700554f592d6fc33591cd7cf98f5cb' #current_app.config['VK_TOKEN'],
+    group_id = '546105350'
 
     session = vk.Session(access_token=access_token)
     vk_api = vk.API(session)
