@@ -7,6 +7,9 @@
     <div class="jumbotron">
         <div class="row">
             <div class="col-md-8">
+                {% for error in form.recaptcha.errors %}
+                    <p style="color:#ff0000">Подтвердите что вы не робот </p>
+                {% endfor %}
                 <img src="{{ url_for('static', filename='images/index.jpg') }}" class="rounded img-fluid">
             </div>
             <div class="col-md-4">
@@ -14,9 +17,6 @@
                     <div class="card-header"><h4>{{ _('Добро пожаловать в Вшаурме!') }}</h4></div>
                     <div class="card-body">
                         {{ render_form(form) }}
-                        {% for error in form.recaptcha.errors %}
-                            Подтвердите что вы не робот
-                        {% endfor %}
                         <hr>
                         <small>{{ _('Уже есть аккаунт?') }} <a href="{{ url_for('.login') }}">{{ _('Нажмите сюда, чтобы войти.') }}</a>
                         </small>

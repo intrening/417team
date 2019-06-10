@@ -67,7 +67,7 @@ class BaseConfig:
     LANGUAGES = ['ru', 'en']
 
     RECAPTCHA_PUBLIC_KEY = '6LeukKcUAAAAAOaF5VigHOWKGDR3lw5Idu2_G7Q2'
-    RECAPTCHA_SECRET_KEY = '6LeukKcUAAAAANJE5UAjhZkfFiT6m0vLQjfa0Y-A'
+    RECAPTCHA_PRIVATE_KEY = '6LeukKcUAAAAANJE5UAjhZkfFiT6m0vLQjfa0Y-A'
 
 
 class DevelopmentConfig(BaseConfig):
