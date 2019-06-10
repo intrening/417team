@@ -26,7 +26,7 @@ class RegisterForm(FlaskForm):
         DataRequired(), Length(10, 128, message=_l('Длина пароля должна быть не меньше 10 символов')), 
              EqualTo('password2'), check_passwords_rules])
     password2 = PasswordField(_l('Подтвердите пароль'), validators=[DataRequired()])
-    recapcha = RecaptchaField()
+    recaptcha = RecaptchaField('Подтвердите, что вы не робот')
     submit = SubmitField(_l('Присоединиться'))
 
     
