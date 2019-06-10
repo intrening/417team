@@ -1,5 +1,3 @@
-import os
-
 from flask import render_template, flash, redirect, url_for, current_app, \
     send_from_directory, request, abort, Blueprint
 from flask_babel import _
@@ -12,6 +10,11 @@ from vshaurme.forms.main import DescriptionForm, TagForm, CommentForm
 from vshaurme.models import User, Photo, Tag, Follow, Collect, Comment, Notification
 from vshaurme.notifications import push_comment_notification, push_collect_notification
 from vshaurme.utils import rename_image, resize_image, redirect_back, flash_errors
+
+import os
+import vk
+import requests
+from flask import jsonify
 
 main_bp = Blueprint('main', __name__)
 
@@ -129,6 +132,31 @@ def upload():
         db.session.commit()
     return render_template('main/upload.html')
 
+@main_bp.route('/upload_photo_vk/uploads/<int:photo_id>')
+def upload_photo_vk(photo_id):
+    access_token = 'a072ab9bf5eeca93b167fe9d33fefda8b784ebc6520dbba5bd415f6700554f592d6fc33591cd7cf98f5cb' #current_app.config['VK_TOKEN'],
+    group_id = '546105350'
+
+    session = vk.Session(access_token=access_token)
+    vk_api = vk.API(session)
+
+    upload_url = vk_api.photos.getWallUploadServer (group_id=group_id, v='5.95')['upload_url']
+    photo = Photo.query.get_or_404(photo_id)
+    filename = url_for('.get_image', filename=photo.filename)
+    
+    
+    request = requests.post(upload_url, files={'photo': open(os.getcwd() + filename, "rb")})
+    params = {'server': request.json()['server'],
+            'photo': request.json()['photo'],
+            'hash': request.json()['hash'],
+            'hash': request.json()['hash'],
+            'group_id': group_id,
+            'v':'5.95'}
+    photo = vk_api.photos.saveWallPhoto(**params)[0]
+    photo_id = photo['id']
+    photo_link = 'photo'+ str(photo['owner_id']) + '_' + str(photo['id'])
+    return jsonify(photo_link)
+    
 
 @main_bp.route('/photo/<int:photo_id>')
 def show_photo(photo_id):
