@@ -145,30 +145,33 @@ def upload():
         db.session.commit()
     return render_template('main/upload.html')
 
-@main_bp.route('/upload_photo_vk/uploads/<int:photo_id>')
-def upload_photo_vk(photo_id):
-    access_token = 'a072ab9bf5eeca93b167fe9d33fefda8b784ebc6520dbba5bd415f6700554f592d6fc33591cd7cf98f5cb' #current_app.config['VK_TOKEN'],
-    group_id = '546105350'
+# @main_bp.route('/upload_photo_vk/uploads/<int:photo_id>')
+# def upload_photo_vk(photo_id):
+#     access_token = 'a072ab9bf5eeca93b167fe9d33fefda8b784ebc6520dbba5bd415f6700554f592d6fc33591cd7cf98f5cb' #current_app.config['VK_TOKEN'],
+#     # group_id = '546105350'
+#     group_id = 184100
 
-    session = vk.Session(access_token=access_token)
-    vk_api = vk.API(session)
+#     #session = vk.Session(app_id=6222115)
+#     session = vk.Session(7014173)
+#     vk_api = vk.API(session)
 
-    upload_url = vk_api.photos.getWallUploadServer (group_id=group_id, v='5.95')['upload_url']
-    photo = Photo.query.get_or_404(photo_id)
-    filename = url_for('.get_image', filename=photo.filename)
+#     # upload_url = vk_api.photos.getWallUploadServer (group_id=group_id, v='5.95')['upload_url']
+#     upload_url = 'https://pu.vk.com/c852228/upload.php?act=do_add&mid=184100&aid=-14&gid=0&hash=0977ed367726f1f4111e3cecc825e5ac&rhash=3c7fbada623723357fee6cffc8a8ece2&swfupload=1&api=1&wallphoto=1'
+
+#     photo = Photo.query.get_or_404(photo_id)
+#     filename = url_for('.get_image', filename=photo.filename)
     
-    
-    request = requests.post(upload_url, files={'photo': open(os.getcwd() + filename, "rb")})
-    params = {'server': request.json()['server'],
-            'photo': request.json()['photo'],
-            'hash': request.json()['hash'],
-            'hash': request.json()['hash'],
-            'group_id': group_id,
-            'v':'5.95'}
-    photo = vk_api.photos.saveWallPhoto(**params)[0]
-    photo_id = photo['id']
-    photo_link = 'photo'+ str(photo['owner_id']) + '_' + str(photo['id'])
-    return jsonify(photo_link)
+#     request = requests.post(upload_url, files={'photo': open(os.getcwd() + filename, "rb")})
+#     params = {'server': request.json()['server'],
+#             'photo': request.json()['photo'],
+#             'hash': request.json()['hash'],
+#             'hash': request.json()['hash'],
+#             'group_id': group_id,
+#             'v':'5.95'}
+#     photo = vk_api.photos.saveWallPhoto(**params)[0]
+#     photo_id = photo['id']
+#     photo_link = 'photo'+ str(photo['owner_id']) + '_' + str(photo['id'])
+#     return jsonify(photo_link)
     
 
 @main_bp.route('/photo/<int:photo_id>')
