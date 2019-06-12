@@ -11,6 +11,7 @@ from vshaurme.blueprints.auth import auth_bp
 from vshaurme.blueprints.main import main_bp
 from vshaurme.blueprints.user import user_bp
 from vshaurme.extensions import bootstrap, db, login_manager, mail, dropzone, moment, whooshee, avatars, csrf, babel
+from vshaurme.fakes import fake_comment_for_24_hours
 from vshaurme.models import Role, User, Photo, Tag, Follow, Notification, Comment, Collect, Permission
 from vshaurme.settings import config
 from vshaurme.utils import dump_users_emails_csv
@@ -166,6 +167,12 @@ def register_commands(app):
         click.echo('Loading emails')
         dump_users_emails_csv(csv_filename)
         click.echo('Done')
+
+    @app.cli.command()
+    def fakecomments():
+        click.echo('Generating 100 fake comments')
+        fake_comment_for_24_hours()
+        click.echo('Done.')
 
 
 def register_rollbar(app):

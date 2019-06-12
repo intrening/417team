@@ -109,3 +109,16 @@ def fake_comment(count=100):
         )
         db.session.add(comment)
     db.session.commit()
+
+
+def fake_comment_for_24_hours(count=100):
+    for i in range(count):
+        comment = Comment(
+            author=User.query.get(random.randint(1, User.query.count())),
+            body=fake.sentence(),
+            timestamp=fake.date_time_between(start_date="-1d"),
+            photo=Photo.query.get(random.randint(1, Photo.query.count()))
+        )
+        db.session.add(comment)
+    db.session.commit()
+

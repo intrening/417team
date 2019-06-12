@@ -3,6 +3,7 @@ from flask import render_template, flash, redirect, url_for, current_app, \
 from flask_babel import _
 from flask_login import login_required, current_user
 from sqlalchemy.sql.expression import func
+from sqlalchemy import desc
 
 from vshaurme.decorators import confirm_required, permission_required
 from vshaurme.extensions import db
@@ -12,6 +13,8 @@ from vshaurme.notifications import push_comment_notification, push_collect_notif
 from vshaurme.utils import rename_image, resize_image, redirect_back, flash_errors
 
 import os
+import datetime
+from datetime import timedelta
 import vk
 import requests
 from flask import jsonify
@@ -41,6 +44,16 @@ def index():
 def explore():
     photos = Photo.query.order_by(func.random()).limit(12)
     return render_template('main/explore.html', photos=photos)
+
+
+@main_bp.route('/trends')
+def trends():
+    one_day_ago = datetime.datetime.now() - timedelta(days=1)
+    photos = db.session.query(Photo).join(Comment
+        ).filter(Comment.timestamp > one_day_ago
+        ).group_by(Photo.id
+        ).order_by(desc(func.count(Comment.id))).limit(12).all()
+    return render_template('main/trends.html', photos=photos)
 
 
 @main_bp.route('/search')
