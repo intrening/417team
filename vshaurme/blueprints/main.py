@@ -182,7 +182,7 @@ def upload_photo_vk(photo_id):
     upload_url = vk_api.photos.getWallUploadServer(group_id=group_id, v='5.95', client_secret = CLIENT_SECRET)['upload_url']
     photo = Photo.query.get_or_404(photo_id)
 
-    filename = os.getcwd() + url_for('.get_image', filename=photo.filename)
+    filename = os.getcwd() + 'vshaurme/' + url_for('.get_image', filename=photo.filename)
     request = requests.post(upload_url, files={'photo': open(filename, "rb")})
     
     params = {'server': request.json()['server'],
