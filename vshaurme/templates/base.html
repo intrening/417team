@@ -47,6 +47,7 @@
                 <div class="navbar-nav mr-auto">
                     {{ render_nav_item('main.index', _('Главная')) }}
                     {{ render_nav_item('main.explore', _('Случайные')) }}
+                    {{ render_nav_item('main.trends', _('Тренды')) }}
                     <form class="form-inline my-2 my-lg-0" action="{{ url_for('main.search') }}">
                         <input type="text" name="q" class="form-control mr-sm-1" placeholder="Фото, тег или пользователь"
                                required>

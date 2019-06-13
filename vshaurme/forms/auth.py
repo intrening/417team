@@ -27,7 +27,10 @@ class RegisterForm(FlaskForm):
              EqualTo('password2'), check_passwords_rules])
     password2 = PasswordField(_l('Подтвердите пароль'), validators=[DataRequired()])
     recaptcha = RecaptchaField('Подтвердите, что вы не робот')
-    submit = SubmitField(_l('Присоединиться'))
+    submit = SubmitField(
+        label=_l('Присоединиться'),
+        render_kw={'onclick': "ym(53984473, 'reachGoal', 'registration'); return true;"}
+    )
 
     
 

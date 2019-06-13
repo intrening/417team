@@ -16,4 +16,7 @@ class TagForm(FlaskForm):
 
 class CommentForm(FlaskForm):
     body = TextAreaField('', validators=[DataRequired()])
-    submit = SubmitField(_l('Опубликовать'))
+    submit = SubmitField(
+        label=('Опубликовать'),
+        render_kw={'onclick': "ym(53984473, 'reachGoal', 'comment publication'); return true;"}
+    )
