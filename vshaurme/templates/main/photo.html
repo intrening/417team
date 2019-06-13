@@ -10,39 +10,25 @@
         <div class="photo">
             {% if photo.archived == False %}
                 <a href="{{ url_for('.get_image', filename=photo.filename) }}" target="_blank">
-                    <img class="img-fluid" src="{{ url_for('.get_image', filename=photo.filename_m) }}">
+                    <img vk:class="img-fluid" src="{{ url_for('.get_image', filename=photo.filename_m) }}">
                 </a>
             {% else %}
                 <h1>Фото в архиве</h1>
             {% endif %}
         </div>
-        <button id='btnVKpost' onclick="initVK()">Сделать
-            пост в VK</button>
-
-        <canvas id="canvas">
-            <div></div>
-        </canvas>
+        <button id='btnVKpost' onclick="startAuth()">Запостить в VK</button>
+        
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <script>
+            function startAuth() {
+                let auth_window = window.open(
+                    'https://oauth.vk.com/authorize?client_id=7014173&display=page&redirect_uri=http://localhost:5000/vk_auth&scope=wall,photos&response_type=code&state=123'
+                );
+                auth_window.addEventListener("unload", initVK);
+            };
+
             function initVK() {
-
-                var img_link = `{{ url_for('.get_image', filename=photo.id) }}`;
-                var img_link = 'http://localhost:5000/uploads/0ad0863c5f524455b978083afdb5542d.png'
-
-                console.log(img_link)
-
-                var canvas = document.getElementById("canvas");
-                var ctx = canvas.getContext("2d");
-
-                var img = new Image();
-                img.crossOrigin = 'Anonymous';
-                img.src = img_link;
-                img.onload = function () {
-                    ctx.drawImage(img, 0, 0)
-                };
-
                 $.getScript('http://vk.com/js/api/openapi.js', function () {
-
                     VK.init({
                         apiId: 7014173,
                     });
@@ -50,130 +36,43 @@
                         function (response) {
                             if (response.status != 'connected') {
                                 alert('Нет доступа к стене, повторите попытку');
-                                //uploadPhotoVK(img);
                             } else {
-                                //console.log(response)
-                                getWallUploadServer(img_link);
+                                postVK();
                             }
                         },
                         8196);
                 });
-                // .then(photo_link => {
-                //     console.log(photo_link);
-                //     //upload_photo_vk (photo_link);
-                // })
-                //     .then (img => {
-                //         console.log (img);
-                //         // wallpostPhotoVK(img);
-                //     });
             };
 
-            function getWallUploadServer(img_link) {
-                //console.log (img);
-                //return ('linkkkk');
-                $.getScript('http://vk.com/js/api/openapi.js', function () {
-                    VK.Api.call(
-                        'photos.getWallUploadServer', {
-                            //group_id: '184100',
-                            v: 5.95,
-                        },
-                        function (response) {
-                            if (response.error) {
-                                alert('Нет доступа к стене, повторите попытку')
-                            } else {
-                                //console.log(response);
-                                var user_id = response.response['user_id'];
-                                var upload_url = response.response['upload_url'];
-                                var album_id = response.response['album_id'];
-                                upload_photo_vk(upload_url, img_link);
-                                //console.log(user_id)
-                                //$("#btnVKpost").html('Фотография добавлена на стену!');
-                            }
-                        }
-                    )
-                });
-            };
-
-            function upload_photo_vk(upload_url, img_link) {
-                //console.log(upload_url);
-                // var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
-                // var xhr = new XHR();
-                // // (2) запрос на другой домен :)
-                // xhr.open('POST', link, true);
-                // // ?group_id=184100&v=5.95
-
-                // xhr.onload = function () {
-                //     alert(this.responseText);
-                // }
-
-                // xhr.onerror = function () {
-                //     alert('Ошибка ' + this.status);
-                // }
-
-                // xhr.send();
-
-                // url = `/upload_photo_vk${img}`;
-                // return fetch(link)
-                //     .then(result => result.json())
-                //     .then ( result => console.log (result))
-                //     .catch(error => {
-                //         console.log(error)
-                //     });
-                // ... получить ссылку для загрузки картинки в ВК
-                // Потом:
-                var blob = canvas.toBlob(function (blob) {
-                    var formData = new FormData()
-                    formData.append('photo', blob)
-
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', upload_url, true)
-
-                    if (!xhr) {
-                        console.log('CORS not supported');
-                    }
-
-
-                    xhr.setRequestHeader('Destination', upload_url);
-                    xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-                    
-                    
-                    xhr.onerror = xhr.onabort = function () {
-                        console.log(xhr.responseText)
-                        // тут будет ответ от ВК, который надо использовать в сохранении фото в альбом или на стену
-                    };
-                    xhr.onload = function () {
-                        var responseText = xhr.responseText;
-                        console.log(responseText);
-                        // process the response.
-                    };
-                    xhr.send(formData)
-                }, 'image/jpeg', 0.85);
-                // внутри callback'а:
-            };
-
-            function wallpostPhotoVK(photo_link) {
-                $.getScript('http://vk.com/js/api/openapi.js', function () {
-                    VK.Api.call(
-                        'wall.post', {
-                            message: 'Vshaurme',
-                            v: 5.95,
-                            attachments: photo_link
-                        },
-                        function (response) {
-                            if (response.error) {
-                                alert('Нет доступа к стене, повторите попытку')
-                            } else {
-                                $("#btnVKpost").html('Фотография добавлена на стену!');
-                            }
-                        }
-                    )
-                });
+            function postVK() {
+                img = `{{ url_for('.get_image', filename=photo.id) }}`
+                get_photo_link = `/upload_photo_vk${img}`;
+                fetch(get_photo_link)
+                    .then(function (result) {
+                        return result.json();
+                    })
+                    .then(function (photo_link) {
+                        $.getScript('http://vk.com/js/api/openapi.js', function () {
+                            VK.Api.call(
+                                'wall.post', {
+                                    message: 'Vshaurme',
+                                    v: 5.95,
+                                    attachments: photo_link
+                                },
+                                function (response) {
+                                    if (response.error) {
+                                        alert('Нет доступа к стене, повторите попытку')
+                                    } else {
+                                        $("#btnVKpost").html('Фотография добавлена на стену!');
+                                    }
+                                });
+                        });
+                    });
             }
         </script>
 
-
-
-        <script src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+        <script src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js">
+        </script>
         <script src="//yastatic.net/share2/share.js"></script>
         <div class="ya-share2" data-services="vkontakte,facebook,twitter"></div>
         {% if current_user == photo.author or current_user.can('MODERATE') %}

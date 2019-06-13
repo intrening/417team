@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, current_app, \
-    send_from_directory, request, abort, Blueprint
+    send_from_directory, request, abort, Blueprint, session
 from flask_babel import _
 from flask_login import login_required, current_user
 from sqlalchemy.sql.expression import func
@@ -18,6 +18,7 @@ from datetime import timedelta
 import vk
 import requests
 from flask import jsonify
+
 
 main_bp = Blueprint('main', __name__)
 
@@ -147,33 +148,54 @@ def upload():
         db.session.commit()
     return render_template('main/upload.html')
 
-# @main_bp.route('/upload_photo_vk/uploads/<int:photo_id>')
-# def upload_photo_vk(photo_id):
-#     access_token = 'a072ab9bf5eeca93b167fe9d33fefda8b784ebc6520dbba5bd415f6700554f592d6fc33591cd7cf98f5cb' #current_app.config['VK_TOKEN'],
-#     # group_id = '546105350'
-#     group_id = 184100
 
-#     #session = vk.Session(app_id=6222115)
-#     session = vk.Session(7014173)
-#     vk_api = vk.API(session)
+@main_bp.route('/vk_auth/')
+def vk_auth():
+    if request.args.get('error'):
+        return request.args['error_description']
 
-#     # upload_url = vk_api.photos.getWallUploadServer (group_id=group_id, v='5.95')['upload_url']
-#     upload_url = 'https://pu.vk.com/c852228/upload.php?act=do_add&mid=184100&aid=-14&gid=0&hash=0977ed367726f1f4111e3cecc825e5ac&rhash=3c7fbada623723357fee6cffc8a8ece2&swfupload=1&api=1&wallphoto=1'
+    code = request.args['code']
 
-#     photo = Photo.query.get_or_404(photo_id)
-#     filename = url_for('.get_image', filename=photo.filename)
+    CLIENT_ID=current_app.config['VK_CLIENT_ID']
+    CLIENT_SECRET=current_app.config['VK_CLIENT_SECRET']
+    REDIRECT_URI=current_app.config['VK_REDIRECT_URI']
     
-#     request = requests.post(upload_url, files={'photo': open(os.getcwd() + filename, "rb")})
-#     params = {'server': request.json()['server'],
-#             'photo': request.json()['photo'],
-#             'hash': request.json()['hash'],
-#             'hash': request.json()['hash'],
-#             'group_id': group_id,
-#             'v':'5.95'}
-#     photo = vk_api.photos.saveWallPhoto(**params)[0]
-#     photo_id = photo['id']
-#     photo_link = 'photo'+ str(photo['owner_id']) + '_' + str(photo['id'])
-#     return jsonify(photo_link)
+    link = f"https://oauth.vk.com/access_token?client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&redirect_uri={REDIRECT_URI}&code={code}&v=5.95"
+    req = requests.get(link).json()
+    session['token'] = req['access_token']
+
+    return '''
+        <script>
+            window.close()
+        </script>
+    '''
+
+@main_bp.route('/upload_photo_vk/uploads/<int:photo_id>')
+def upload_photo_vk(photo_id):
+    CLIENT_ID=current_app.config['VK_CLIENT_ID']
+    CLIENT_SECRET=current_app.config['VK_CLIENT_SECRET']
+    group_id = '183392662'
+
+    vk_session = vk.Session(access_token=session['token'])
+    vk_api = vk.API(vk_session)
+
+    upload_url = vk_api.photos.getWallUploadServer(group_id=group_id, v='5.95', client_secret = CLIENT_SECRET)['upload_url']
+    photo = Photo.query.get_or_404(photo_id)
+
+    filename = os.getcwd() + url_for('.get_image', filename=photo.filename)
+    request = requests.post(upload_url, files={'photo': open(filename, "rb")})
+    
+    params = {'server': request.json()['server'],
+            'photo': request.json()['photo'],
+            'hash': request.json()['hash'],
+            'hash': request.json()['hash'],
+            'group_id': '183392662',
+            'v':'5.95'}
+    photo = vk_api.photos.saveWallPhoto(**params)[0]
+    photo_id = photo['id']
+    photo_link = 'photo'+ str(photo['owner_id']) + '_' + str(photo['id'])
+
+    return jsonify(photo_link)
     
 
 @main_bp.route('/photo/<int:photo_id>')

@@ -29,3 +29,4 @@ WTForms==2.2.1
 rollbar==0.14.7
 Flask-Babel==0.12.2
 VK==2.0.2
+Flask-Session=0.3.1
