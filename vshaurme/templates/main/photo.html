@@ -18,7 +18,7 @@
         <script>
             function startAuth() {
                 let auth_window = window.open(
-                    'https://oauth.vk.com/authorize?client_id=7014173&display=page&redirect_uri=http://localhost:5000/vk_auth&scope=wall,photos&response_type=code&state=123'
+                    `https://oauth.vk.com/authorize?client_id=7014173&display=page&redirect_uri=http://417team.pythonanywhere.com/vk_auth&scope=wall,photos&response_type=code&state=123`
                 );
                 auth_window.addEventListener("unload", initVK);
             };
