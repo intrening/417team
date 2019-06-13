@@ -112,6 +112,7 @@ class User(db.Model, UserMixin):
     followers = db.relationship('Follow', foreign_keys=[Follow.followed_id], back_populates='followed',
                                 lazy='dynamic', cascade='all')
 
+
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         self.generate_avatar()
@@ -227,6 +228,7 @@ class Photo(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     can_comment = db.Column(db.Boolean, default=True)
     flag = db.Column(db.Integer, default=0)
+    archived = db.Column(db.Boolean, default=False)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     author = db.relationship('User', back_populates='photos')
