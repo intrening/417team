@@ -36,7 +36,7 @@ def show_collections(username):
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['VSHAURME_PHOTO_PER_PAGE']
-    pagination = Collect.query.with_parent(user).order_by(Collect.timestamp.desc()).paginate(page, per_page)
+    pagination = Collect.query.with_parent(user).join(Photo).filter(Photo.archived == False).order_by(Collect.timestamp.desc()).paginate(page, per_page)
     collects = pagination.items
     return render_template('user/collections.html', user=user, pagination=pagination, collects=collects)
 
@@ -49,7 +49,8 @@ def show_archived(username):
     per_page = current_app.config['VSHAURME_PHOTO_PER_PAGE']
     pagination = Photo.query.with_parent(user).filter(Photo.archived == True).order_by(Photo.timestamp.desc()).paginate(page, per_page)
     photos = pagination.items
-    return render_template('user/archived.html', user=user, pagination=pagination, photos=photos)
+    photo_count = Photo.query.filter(Photo.archived == True).count()
+    return render_template('user/archived.html', user=user, pagination=pagination, photos=photos, photo_count=photo_count)
 
 
 @user_bp.route('/follow/<username>', methods=['POST'])

@@ -76,7 +76,7 @@
         {{ render_nav_item('user.show_following', _('Подписки'), user.following.count() - 1, username=user.username) }}
         {{ render_nav_item('user.show_followers', _('Подписчики'), user.followers.count() - 1, username=user.username) }}
         {% if current_user == user %}
-            {{ render_nav_item('user.show_archived', _('Архив'), user.archived|length, username=user.username) }}
+            {{ render_nav_item('user.show_archived', _('Архив'), photo_count, username=user.username) }}
         {% endif %}
     </ul>
 </div>
