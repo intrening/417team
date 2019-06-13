@@ -54,7 +54,9 @@ class BaseConfig:
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = ('Vshaurme Admin', MAIL_USERNAME)
 
-    VK_TOKEN = os.getenv('VK_TOKEN')
+    VK_CLIENT_ID = os.getenv('VK_CLIENT_ID')
+    VK_CLIENT_SECRET = os.getenv('VK_CLIENT_SECRET')
+    VK_REDIRECT_URI = os.getenv('VK_REDIRECT_URI')
 
     DROPZONE_ALLOWED_FILE_TYPE = 'image'
     DROPZONE_MAX_FILE_SIZE = 3

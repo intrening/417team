@@ -1,7 +1,7 @@
 import os
 
 import click
-from flask import Flask, render_template, request, current_app
+from flask import Flask, render_template, request, current_app, session
 from flask_login import current_user
 from flask_wtf.csrf import CSRFError
 
