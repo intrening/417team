@@ -30,6 +30,7 @@ def index():
         pagination = Photo.query \
             .join(Follow, Follow.followed_id == Photo.author_id) \
             .filter(Follow.follower_id == current_user.id) \
+            .filter(Photo.archived == False) \
             .order_by(Photo.timestamp.desc()) \
             .paginate(page, per_page)
         photos = pagination.items
@@ -42,7 +43,7 @@ def index():
 
 @main_bp.route('/explore')
 def explore():
-    photos = Photo.query.order_by(func.random()).limit(12)
+    photos = Photo.query.filter(Photo.archived == False).order_by(func.random()).limit(12)
     return render_template('main/explore.html', photos=photos)
 
 
@@ -51,6 +52,7 @@ def trends():
     one_day_ago = datetime.datetime.now() - timedelta(days=1)
     photos = db.session.query(Photo).join(Comment
         ).filter(Comment.timestamp > one_day_ago
+        ).filter(Photo.archived == False
         ).group_by(Photo.id
         ).order_by(desc(func.count(Comment.id))).limit(12).all()
     return render_template('main/trends.html', photos=photos)
@@ -71,7 +73,7 @@ def search():
     elif category == 'tag':
         pagination = Tag.query.whooshee_search(q).paginate(page, per_page)
     else:
-        pagination = Photo.query.whooshee_search(q).paginate(page, per_page)
+        pagination = Photo.query.whooshee_search(q).filter(Photo.archived == False).paginate(page, per_page)
     results = pagination.items
     return render_template('main/search.html', q=q, results=results, pagination=pagination, category=category)
 
@@ -393,6 +395,24 @@ def delete_photo(photo_id):
             return redirect(url_for('user.index', username=photo.author.username))
         return redirect(url_for('.show_photo', photo_id=photo_p.id))
     return redirect(url_for('.show_photo', photo_id=photo_n.id))
+
+
+@main_bp.route('/archive/photo/<int:photo_id>', methods=['POST'])
+@login_required
+def archive_photo(photo_id):
+    photo = Photo.query.get_or_404(photo_id)
+    if current_user != photo.author and not current_user.can('MODERATE'):
+        abort(403)
+    
+    if photo.archived:
+        photo.archived = False
+        flash(_('Фото разархивировано.'), 'info')
+    else:
+        photo.archived = True
+        flash(_('Фото в архиве'), 'info')
+
+    db.session.commit()
+    return redirect(url_for('.show_photo', photo_id=photo_id))
 
 
 @main_bp.route('/delete/comment/<int:comment_id>', methods=['POST'])
