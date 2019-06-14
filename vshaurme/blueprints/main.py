@@ -482,3 +482,8 @@ def delete_tag(photo_id, tag_id):
 
     flash(_('Тег удален.'), 'info')
     return redirect(url_for('.show_photo', photo_id=photo_id))
+
+
+@main_bp.route('/metrika')
+def show_metrika():
+    return current_app.config['YA_METRIKA']
