@@ -54,9 +54,9 @@ class BaseConfig:
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = ('Vshaurme Admin', MAIL_USERNAME)
 
-    VK_CLIENT_ID = '7014173' #os.getenv('VK_CLIENT_ID')
-    VK_CLIENT_SECRET = 'r9lEXF0AwO00DfAxW2c7' #os.getenv('VK_CLIENT_SECRET')
-    VK_REDIRECT_URI = 'http://417team.pythonanywhere.com/vk_auth' #os.getenv('VK_REDIRECT_URI')
+    VK_CLIENT_ID = os.getenv('VK_CLIENT_ID')
+    VK_CLIENT_SECRET = os.getenv('VK_CLIENT_SECRET')
+    VK_REDIRECT_URI = os.getenv('VK_REDIRECT_URI')
 
     YA_METRIKA = os.getenv('YA_METRIKA')
     DROPZONE_ALLOWED_FILE_TYPE = 'image'
